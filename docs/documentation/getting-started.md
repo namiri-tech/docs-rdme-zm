@@ -5,35 +5,98 @@ excerpt: >-
   jiffy!
 hidden: false
 ---
-Welcome to ReadMe! :owlbert:
+## What is DigiTax?
 
-You're on your way to building an awesome developer hub! Here's some of the things you'll want to check out.
+**DigiTax is a ZRA-licenced smart invoice solutions provider authorized to provide tax\
+compliance software**
 
-# 📝 Customize your docs
+> **ZRA** stands for Zambia Revenue Authority
 
-What you're looking at right now is what we call our **Guides**. It's a free-form place to write to your heart's content! And the best part is... you aren't alone! Your users can contribute (with your approval, don't worry!) using the **[Suggested Edits](https://docs.readme.com/main/docs/suggested-edits)** feature on every page. It's like GitHub Pull Requests, but for text!
+DigiTax Platform, powered by Namiri Technologies Ltd, is a suite of solutions:
 
-Want to ease your users into it with some fancy marketing pages? You can enable a **[Landing Page](https://docs.readme.com/main/docs/landing-page)**, and write as much HTML as you want to make it look like your brand.
+<br />
 
-# 🚦 Interactive API Docs
+* DigiTax App (Mobile PWA),
+* DigiTax Dashboard (Web Browser-based Desktop application) and
+* DigiTax API
 
-If you don't have an API, then no worries! ReadMe is great for any sort of documentation. But if you have an API, there are a few features to make your experience with ReadMe (and your users' experience with your developer hub!) a magical one:
+The first two are powered by the DigiTax API :tada:
 
-* **Upload your OpenAPI file:** First step is to describe your API to us! If you already have an OpenAPI file, there's lots of ways to upload it in the *API Reference* section. Our favorite is the GitHub Action, but you can use our CLI or you can upload it directly to the UI!
-* **Add API Keys:** Don't make your users hunt around for API keys. You can surface their API key [right in the docs](https://docs.readme.com/main/docs/personalized-docs), so they can play around with your API right inside ReadMe.
-* **Add Logs:** The coolest thing about ReadMe is you can add [real-time API Logs](https://docs.readme.com/main/docs/developer-dashboard) right to your docs, so you and your users can both see what's going on with their API. Trust us, it's magical!
+## Tax in Zambia
 
-# 📈 Know your users
+ZRA, Zambia Revenue Authority, is an agency of the government of Zambia that is responsible for the assessment, collection and accounting for all revenues that are due to the government in accordance with the laws of Zambia.
 
-One of the best ways to know if you're nailing the dev experience is checking out how your users are interacting with both your docs and API.
+<br />
 
-* **Documentation Metrics** let you see who's using your docs, what your best and worst pages are, what people are searching for and more!
-* **API Metrics** are a bit harder to set up (I promise we do our best to make it painless!), but once you set this up you'll know *everything* that's going on with your users!
+There are several tax types:
 
-# 💬 We're here to help!
+<br />
 
-ReadMe has a *ton* of ways to make your docs the envy of any <Glossary>parliament</Glossary> (like that mouseover!). If you get stuck, [shoot us an email](mailto:support@readme.io) or use the Intercom widget on the bottom right of any page.
+* [Turnover Tax](https://www.zra.org.zm/tax-information/#turnover-tax)
+* [Pay As You Earn (PAYE)](https://www.zra.org.zm/tax-information/#paye)
+* [Value Added Tax](https://www.zra.org.zm/tax-information/#VAT) , VAT for short
+* [Income Tax](https://www.zra.org.zm/tax-information/#income-tax)
+* [Withholding Tax](https://www.zra.org.zm/tax-information/#wht)
+* [Presumptive Tax](https://www.zra.org.zm/tax-information/#presumptive-tax)
+* [Property Transfer Tax](https://www.zra.org.zm/tax-information/#ptt)
+* [Excise Duty](https://www.zra.org.zm/tax-information/#exd)
+* [Base Tax](https://www.zra.org.zm/tax-information/#base-tax)
+* [Insurance Premium Levy](https://www.zra.org.zm/tax-information/#ipl) , IPL for short
+* [Mineral Royalty](https://www.zra.org.zm/tax-information/#mineral-royalty)
 
-We're excited you're here! :blue_heart:
+<br />
 
-![This won't be fun to clean up...](https://owlbert.io/images/popper.gif)
+Systems concerning certain tax types have been introduced and have evolved over the years.
+
+<br />
+
+The use an Electronic Fiscal Device (EFD) was mandated by the EFD Law which was passed through Act Number 17 of 2015. It has been mandatory for taxpayers registered for 2 of the taxes above (VAT and IPL) to procure, install and use an EFD.
+
+<br />
+
+### Smart Invoice
+
+<br />
+
+More recently, ZRA launched Smart Invoice. Under the new provision, it is mandatory for a taxable supplier to use an electronic invoicing system to record each sale or transaction. Electronic Fiscal Devices have been phased out following the introduction of the electronic invoicing system (Smart Invoice).
+
+<br />
+
+Moreover, the EFD implementation only covered Value Added Tax (VAT) and Insurance Premium Levy (IPL) while Smart Invoice will cover more types of taxes or levies such as:
+
+* VAT
+* Turnover Tax
+* Rental Income
+* IPL
+* Tourism Levy and
+* Local Excise Duty on Electric Energy
+
+The Smart Invoice will also have a component that will provide for stock management. Smart Invoice is here to help more taxpayers become compliant (removing the need for having physical gadgets, the EFDs).
+
+> 📘 Smart Invoice is software based while EFDs was device-based
+>
+> The implementation of EFDs was mainly based on physical gadgets (devices) while Smart Invoice will be software based.
+
+Once on-boarded to Smart Invoice, you get to leverage the technological convenience this software solution provides.
+
+## Enter DigiTax
+
+DigiTax is your digital solution for effective, simple and painless Smart invoice tax compliance. Our suite of software products enable businesses to transmit smart invoices directly to tax authority in real-time.
+
+**DigiTax** is a solution that sits between you, a taxpayer, and ZRA's smart invoice system.
+
+There are four Smart Invoice solutions with varied Eligibility requirements listed on ZRA's website [here](https://www.zra.org.zm/smart-invoice-learn-more/) .
+
+The fourth one, **Certified Invoicing Systems** involves an integration which is achieved through an interface with the Virtual Sales Data Controller (VSDC) which is a bridge between the Certified Invoicing System (CIS) and the ZRA Smart Invoice System.
+
+However, instead of onboarding directly onto the ZRA Smart Invoice System, a process that requires significant resource investment, both time and technical resources, we do the heavy lifting for you - Making tax compliance less taxing.
+
+<br />
+
+> 👍 The DigiTax Platform does the heavy lifting for you - Making tax compliance less taxing!
+
+The DigiTax Platform, we have developed a suite of solutions:
+
+* DigiTax App (Mobile PWA)
+* DigiTax Dashboard (Web Browser-based Desktop application for e-invoicing) and
+* DigiTax API (for system-to-system integration without the issue of platform hopping).
