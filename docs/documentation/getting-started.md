@@ -1,5 +1,5 @@
 ---
-title: 'Getting Started: DigiTax and Smart Invoicing'
+title: 'Getting Started: DigiTax and ZRA Smart Invoicing'
 excerpt: >-
   This page will help you get started with DGTXZM. You'll be up and running in a
   jiffy!
