@@ -1,0 +1,7 @@
+- post_sales
+- get_sales
+- post_credit-notes
+- get_credit-notes
+- post_debit-notes
+- get_debit-notes
+- get_sales-sale-id

@@ -1,0 +1,2243 @@
+openapi: 3.0.1
+info:
+  title: DigiTax
+  description: DigiTax Public API
+  version: "2"
+  termsOfService: https://digitax.tech/page/terms
+  contact:
+    name: DigiTax
+    url: https://digitax.tech
+    email: info@digitax.tech
+  license:
+    name: Apache 2.0
+servers:
+  - url: https://staging.api-v2.digitax.tech/zm/v1
+    description: Staging
+paths:
+  /info:
+    get:
+      summary: Get ZRA information on the business
+      tags:
+        - Businesses
+      security:
+        - apiKeyAuth: []
+      responses:
+        default:
+          description: Error response
+          content:
+            application/json:
+              schema:
+                $ref: "#/components/schemas/Error"
+        "200":
+          description: Success
+          content:
+            application/json:
+              schema:
+                $ref: "#/components/schemas/Branch"
+  /items:
+    post:
+      tags:
+        - Items
+      summary: Create an item
+      description: Create an item
+      security:
+        - apiKeyAuth: []
+      requestBody:
+        required: true
+        content:
+          application/json:
+            schema:
+              type: object
+              required:
+                - item_class_code
+                - item_type_code
+                - item_name
+                - origin_nation_code
+                - package_unit_code
+                - quantity_unit_code
+                - vat_category_code
+                - default_unit_price
+              properties:
+                item_class_code:
+                  type: string
+                  description: The item class code of the item
+                  example: "15000000"
+                item_type_code:
+                  type: string
+                  description: The item type code of the item
+                  example: "2"
+                item_name:
+                  type: string
+                  description: The name of the item
+                  example: DigiTax Product 01
+                origin_nation_code:
+                  type: string
+                  description: The country of origin code of the item
+                  example: ZM
+                package_unit_code:
+                  type: string
+                  description: The package unit code of the item
+                  example: CT
+                quantity_unit_code:
+                  type: string
+                  description: The quantity unit code of the item
+                  example: BX
+                vat_category_code:
+                  type: string
+                  description: The VAT category code of the item
+                  example: A
+                ipl_category_code:
+                  type: string
+                  description: The Insurance Premium Levy category code of the item
+                  example: IPL1
+                tl_category_code:
+                  type: string
+                  description: The Tourism Levy category code of the item
+                  example: TL
+                excise_category_code:
+                  type: string
+                  description: The Excise duty category code of the item
+                  example: EXEEG
+                default_unit_price:
+                  type: number
+                  description: The default price of the item
+                  example: 1000
+                stock_quantity:
+                  type: number
+                  description: Starting stock quantity
+                  example: 1000
+                insurable:
+                  type: boolean
+                  description: Is the item insurable?
+                  example: false
+                callback_url:
+                  type: string
+                  description: The callback url to call when we have new information about the item, usually after syncing with ZRA
+                  example: https://example.site/services/digitaxQueueReceiverPROXY
+                bar_code:
+                  type: string
+                  description: The bar code or unique product code(UPC) of the item
+                  example: "012345678905"
+                recommended_retail_price:
+                  type: number
+                  description: Recommended Retailed Price as set by the manufacturer
+                  example: 1000
+      responses:
+        default:
+          description: Error response
+          content:
+            application/json:
+              schema:
+                $ref: "#/components/schemas/Error"
+        "201":
+          description: Success
+          content:
+            application/json:
+              schema:
+                $ref: "#/components/schemas/Item"
+    get:
+      tags:
+        - Items
+      summary: Get list of items owned by the business
+      description: Get list of items owned by the business
+      security:
+        - apiKeyAuth: []
+      parameters:
+        - $ref: "#/components/parameters/Before"
+        - $ref: "#/components/parameters/After"
+        - $ref: "#/components/parameters/PageSize"
+      responses:
+        default:
+          description: Error response
+          content:
+            application/json:
+              schema:
+                $ref: "#/components/schemas/Error"
+        "200":
+          description: Success
+          content:
+            application/json:
+              schema:
+                type: object
+                required:
+                  - pagination
+                  - data
+                properties:
+                  pagination:
+                    $ref: "#/components/schemas/Pagination"
+                  data:
+                    type: array
+                    items:
+                      $ref: "#/components/schemas/Item"
+  /items/{item_id}:
+    parameters:
+      - in: path
+        name: item_id
+        required: true
+        description: Item ID in Digitax
+        schema:
+          type: string
+          example: item_01HC3J1VVVM05YCTS61G7V3KC6
+    put:
+      tags:
+        - Items
+      summary: Update an item
+      description: Update an item
+      security:
+        - apiKeyAuth: []
+      requestBody:
+        required: true
+        content:
+          application/json:
+            schema:
+              type: object
+              properties:
+                item_name:
+                  type: string
+                  example: Hello food
+                default_unit_price:
+                  type: number
+                  description: The default price of the item up to 4 decimal places
+                  example: 14.0000
+                recommended_retail_price:
+                  type: number
+                  description: Recommended Retailed Price as set by the manufacturer
+                  example: 1000
+      responses:
+        default:
+          description: Error response
+          content:
+            application/json:
+              schema:
+                $ref: "#/components/schemas/Error"
+        "200":
+          description: Success
+          content:
+            application/json:
+              schema:
+                $ref: "#/components/schemas/Item"
+    get:
+      tags:
+        - Items
+      summary: Get a specific item
+      description: Get a specific item
+      security:
+        - apiKeyAuth: []
+      responses:
+        default:
+          description: Error response
+          content:
+            application/json:
+              schema:
+                $ref: "#/components/schemas/Error"
+        "200":
+          description: Success
+          content:
+            application/json:
+              schema:
+                $ref: "#/components/schemas/Item"
+  /items/item_composition/{item_id}:
+    get:
+      tags:
+        - Items
+      summary: Get item composition
+      description: Get item composition
+      security:
+        - apiKeyAuth: []
+      parameters:
+        - in: path
+          name: item_id
+          required: true
+          schema:
+            type: string
+            description: Item ID in Digitax
+            example: item_01HC3J1VVVM05YCTS61G7V3KC6
+      responses:
+        default:
+          description: Error response
+          content:
+            application/json:
+              schema:
+                $ref: "#/components/schemas/Error"
+        "200":
+          description: Success
+          content:
+            application/json:
+              schema:
+                type: array
+                items:
+                  $ref: "#/components/schemas/ItemComposition"
+  /items/item_composition:
+    post:
+      tags:
+        - Items
+      summary: Create item composition
+      description: Create item composition
+      security:
+        - apiKeyAuth: []
+      requestBody:
+        required: true
+        content:
+          application/json:
+            schema:
+              type: object
+              properties:
+                item_id:
+                  type: string
+                  example: item_01HC3J1VVVM05YCTS61G7V3KC6
+                composition:
+                  type: array
+                  items:
+                    type: object
+                    required:
+                      - composition_item_id
+                      - quantity
+                    properties:
+                      composition_item_id:
+                        type: string
+                        example: item_01J47XGVT004DFVCVFYN50SRSF
+                      quantity:
+                        type: integer
+                        example: 30
+      responses:
+        default:
+          description: Error response
+          content:
+            application/json:
+              schema:
+                $ref: "#/components/schemas/Error"
+        "201":
+          description: Item composition created successfully
+          content:
+            application/json:
+              schema:
+                type: array
+                items:
+                  $ref: "#/components/schemas/ItemComposition"
+  /customers:
+    get:
+      tags:
+        - Customers
+      summary: Get a list of business customers
+      description: Get a list of business customers
+      security:
+        - apiKeyAuth: []
+      parameters:
+        - $ref: "#/components/parameters/Before"
+        - $ref: "#/components/parameters/After"
+        - $ref: "#/components/parameters/PageSize"
+      responses:
+        default:
+          description: Error response
+          content:
+            application/json:
+              schema:
+                $ref: "#/components/schemas/Error"
+        "200":
+          description: Success
+          content:
+            application/json:
+              schema:
+                type: object
+                required:
+                  - pagination
+                  - data
+                properties:
+                  pagination:
+                    $ref: "#/components/schemas/Pagination"
+                  data:
+                    type: array
+                    items:
+                      $ref: "#/components/schemas/Customer"
+    post:
+      tags:
+        - Customers
+      summary: Save business customer
+      description: Save business customer
+      security:
+        - apiKeyAuth: []
+      requestBody:
+        required: true
+        content:
+          application/json:
+            schema:
+              type: object
+              required:
+                - customer_name
+                - customer_tin
+                - phone
+              properties:
+                customer_name:
+                  type: string
+                  description: Customer Name
+                  example: John Doe
+                customer_tin:
+                  type: string
+                  description: Customer Tax Identification Number (TIN)
+                  example: "1012345678"
+                email:
+                  type: string
+                  description: Customer Email Address
+                  example: john@doe.com
+                is_lpo:
+                  type: boolean
+                  description: Is this a LPO customer?
+                  example: false
+                phone:
+                  type: string
+                  description: Customer Phone Number
+                  example: +260712345678
+                address:
+                  type: string
+                  description: Customer physical address
+                  example: "5 Aluguntugui Road, Lusaka"
+      responses:
+        default:
+          description: Error response
+          content:
+            application/json:
+              schema:
+                $ref: "#/components/schemas/Error"
+        "200":
+          description: Success
+          content:
+            application/json:
+              schema:
+                $ref: "#/components/schemas/Customer"
+  /customers/{customer_id}:
+    get:
+      tags:
+        - Customers
+      summary: Get a business customer
+      description: Retrieves information about a customer given their ID on DigiTax
+      security:
+        - apiKeyAuth: []
+      parameters:
+        - in: path
+          name: customer_id
+          required: true
+          schema:
+            type: string
+            description: Customer ID on DigiTax
+            example: customer_01HC3J1VVVM05YCTS61G7V3KC6
+      responses:
+        default:
+          description: Error response
+          content:
+            application/json:
+              schema:
+                $ref: "#/components/schemas/Error"
+        "200":
+          description: Success
+          content:
+            application/json:
+              schema:
+                $ref: "#/components/schemas/Customer"
+  /imports:
+    get:
+      tags:
+        - Imports
+      summary: Get list of import items received from ZRA
+      description: Get list of import items received from ZRA
+      security:
+        - apiKeyAuth: []
+      parameters:
+        - $ref: "#/components/parameters/Before"
+        - $ref: "#/components/parameters/After"
+        - $ref: "#/components/parameters/PageSize"
+      responses:
+        default:
+          description: Error response
+          content:
+            application/json:
+              schema:
+                $ref: "#/components/schemas/Error"
+        "200":
+          description: Success
+          content:
+            application/json:
+              schema:
+                type: object
+                required:
+                  - pagination
+                  - meta
+                  - data
+                properties:
+                  pagination:
+                    $ref: "#/components/schemas/Pagination"
+                  meta:
+                    $ref: "#/components/schemas/FetchMeta"
+                  data:
+                    type: array
+                    items:
+                      $ref: "#/components/schemas/Import"
+  /imports/{import_id}/review:
+    put:
+      tags:
+        - Imports
+      summary: Approve or reject an import item
+      description: Approve or reject an import item
+      security:
+        - apiKeyAuth: []
+      parameters:
+        - in: path
+          name: import_id
+          required: true
+          schema:
+            type: string
+            description: Import ID in Digitax
+            example: import_01HC3J1VVVM05YCTS61G7V3KC6
+      requestBody:
+        required: true
+        content:
+          application/json:
+            schema:
+              type: object
+              required:
+                - reject
+              properties:
+                remarks:
+                  type: string
+                  description: Text reason for the rejection or approval
+                  example: unrecognised import
+                reject:
+                  type: boolean
+                  description: Whether or not to reject the import item, if false it will be approved, and rejected if true
+                  example: false
+      responses:
+        default:
+          description: Error response
+          content:
+            application/json:
+              schema:
+                $ref: "#/components/schemas/Error"
+        "200":
+          description: Success
+          content:
+            application/json:
+              schema:
+                $ref: "#/components/schemas/Import"
+  /imports/{import_id}/link:
+    put:
+      tags:
+        - Imports
+      summary: Link import item to an item in Digitax
+      description: Link import item to an item in Digitax
+      security:
+        - apiKeyAuth: []
+      parameters:
+        - in: path
+          name: import_id
+          required: true
+          schema:
+            type: string
+            description: Import ID in Digitax
+            example: import_01HC3J1VVVM05YCTS61G7V3KC6
+      requestBody:
+        required: true
+        content:
+          application/json:
+            schema:
+              type: object
+              required:
+                - item_id
+              properties:
+                item_id:
+                  type: string
+                  description: The id of the item in Digitax
+                  example: item_01HC3J1VVVM05YCTS61G7V3KC6
+                quantity:
+                  type: number
+                  description: The quantity of the item in Digitax to which the import item is being linked. If 0, or not provided no stock will be added for the item
+                  example: 8
+      responses:
+        default:
+          description: Error response
+          content:
+            application/json:
+              schema:
+                $ref: "#/components/schemas/Error"
+        "200":
+          description: Success
+          content:
+            application/json:
+              schema:
+                $ref: "#/components/schemas/Import"
+  /suppliers:
+    get:
+      tags:
+        - Suppliers
+      summary: Get a list of business suppliers
+      description: Get a list of business suppliers
+      security:
+        - apiKeyAuth: []
+      parameters:
+        - $ref: "#/components/parameters/Before"
+        - $ref: "#/components/parameters/After"
+        - $ref: "#/components/parameters/PageSize"
+      responses:
+        default:
+          description: Error response
+          content:
+            application/json:
+              schema:
+                $ref: "#/components/schemas/Error"
+        "200":
+          description: Success
+          content:
+            application/json:
+              schema:
+                type: object
+                required:
+                  - pagination
+                  - data
+                properties:
+                  pagination:
+                    $ref: "#/components/schemas/Pagination"
+                  data:
+                    type: array
+                    items:
+                      $ref: "#/components/schemas/Supplier"
+    post:
+      tags:
+        - Suppliers
+      summary: Save business supplier
+      description: Save business supplier
+      security:
+        - apiKeyAuth: []
+      requestBody:
+        required: true
+        content:
+          application/json:
+            schema:
+              type: object
+              required:
+                - supplier_name
+                - supplier_tin
+              properties:
+                supplier_name:
+                  type: string
+                  description: Supplier Name
+                  example: Elite Books
+                supplier_tin:
+                  type: string
+                  description: Supplier Tax Identification Number (TIN)
+                  example: "1012345678"
+                email:
+                  type: string
+                  description: Supplier Email Address
+                  example: elite@books.com
+                phone:
+                  type: string
+                  description: Supplier Phone Number
+                  example: +260712345678
+      responses:
+        default:
+          description: Error response
+          content:
+            application/json:
+              schema:
+                $ref: "#/components/schemas/Error"
+        "200":
+          description: Success
+          content:
+            application/json:
+              schema:
+                $ref: "#/components/schemas/Supplier"
+  /suppliers/{supplier_id}:
+    get:
+      tags:
+        - Suppliers
+      summary: Get a business supplier
+      description: Retrieves information about a supplier given their ID on DigiTax
+      security:
+        - apiKeyAuth: []
+      parameters:
+        - in: path
+          name: supplier_id
+          required: true
+          schema:
+            type: string
+            description: Supplier ID on DigiTax
+            example: supplier_01J56FWS9KV3KAS0RHD4QJ1QCT
+      responses:
+        default:
+          description: Error response
+          content:
+            application/json:
+              schema:
+                $ref: "#/components/schemas/Error"
+        "200":
+          description: Success
+          content:
+            application/json:
+              schema:
+                $ref: "#/components/schemas/Supplier"
+  /purchases:
+    get:
+      tags:
+        - Purchases
+      summary: List purchases
+      description: Get a list of purchases
+      security:
+        - apiKeyAuth: []
+      parameters:
+        - $ref: "#/components/parameters/Before"
+        - $ref: "#/components/parameters/After"
+        - $ref: "#/components/parameters/PageSize"
+      responses:
+        default:
+          description: Error response
+          content:
+            application/json:
+              schema:
+                $ref: "#/components/schemas/Error"
+        "200":
+          description: Success
+          content:
+            application/json:
+              schema:
+                type: object
+                required:
+                  - pagination
+                  - data
+                  - meta
+                properties:
+                  pagination:
+                    $ref: "#/components/schemas/Pagination"
+                  meta:
+                    $ref: "#/components/schemas/FetchMeta"
+                  data:
+                    type: array
+                    items:
+                      $ref: "#/components/schemas/Purchase"
+    post:
+      tags:
+        - Purchases
+      summary: Add manual purchase
+      description: Add manual purchase
+      security:
+        - apiKeyAuth: []
+      requestBody:
+        required: true
+        content:
+          application/json:
+            schema:
+              type: object
+              required:
+                - items
+                - purchase_date
+              properties:
+                purchase_date:
+                  type: string
+                  format: date
+                  example: "2024-08-13"
+                supplier_tin:
+                  type: string
+                  example: "1234567890"
+                supplier_name:
+                  type: string
+                  example: John Doe
+                supplier_email:
+                  type: string
+                  example: "john@doe.com"
+                supplier_phone:
+                  type: string
+                  example: "+260712445689"
+                supplier_id:
+                  type: string
+                  example: supplier_01J2CQMAZG1YCJ82YWQH6BHEKS
+                supplier_invoice_number:
+                  type: integer
+                  format: int32
+                  description: Invoice number on the supplier's Certified Invoicing Solution (CIS), must be unique across all purchases
+                  example: 340
+                payment_type_code:
+                  type: string
+                  example: "07"
+                reject:
+                  type: boolean
+                  description: Whether to create the purchase with the approved or rejected status
+                  example: false
+                items:
+                  type: array
+                  items:
+                    type: object
+                    required:
+                      - item_id
+                      - quantity
+                      - unit_price
+                      - discount_rate
+                      - discount_amount
+                      - total_amount
+                    properties:
+                      item_id:
+                        type: string
+                        example: item_01J55G02W1TY6YVFBMJHYKCENK
+                      quantity:
+                        type: number
+                        example: 1
+                      unit_price:
+                        type: number
+                        description: Amount up to 4 decimal places
+                        example: 1000.0000
+                      total_amount:
+                        type: number
+                        description: Amount up to 4 decimal places
+                        example: 1000.0000
+                      package_unit_quantity:
+                        type: number
+                        example: 1
+                      discount_rate:
+                        type: number
+                        description: Discount rate in decimal form i.e. 0.1 = 10%,
+                        maximum: 1
+                        example: 0
+                      discount_amount:
+                        type: number
+                        description: Amount up to 4 decimal places
+                        example: 0
+      responses:
+        default:
+          description: Error response
+          content:
+            application/json:
+              schema:
+                $ref: "#/components/schemas/Error"
+        "201":
+          description: Success
+          content:
+            application/json:
+              schema:
+                $ref: "#/components/schemas/Purchase"
+  /purchases/{purchase_id}:
+    get:
+      tags:
+        - Purchases
+      summary: Get specific purchase
+      description: Get specific purchase
+      security:
+        - apiKeyAuth: []
+      parameters:
+        - in: path
+          name: purchase_id
+          required: true
+          schema:
+            type: string
+            description: Purchase ID in Digitax
+            example: purchase_01HC3J1VVVM05YCTS61G7V3KC6
+      responses:
+        default:
+          description: Error response
+          content:
+            application/json:
+              schema:
+                $ref: "#/components/schemas/Error"
+        "200":
+          description: Success
+          content:
+            application/json:
+              schema:
+                $ref: "#/components/schemas/Purchase"
+  /purchases/{purchase_id}/link-items:
+    put:
+      tags:
+        - Purchases
+      summary: Link purchase item to item
+      description: Link purchase item to item
+      security:
+        - apiKeyAuth: []
+      parameters:
+        - in: path
+          name: purchase_id
+          required: true
+          schema:
+            type: string
+          description: Purchase id
+          example: purchase_01HC3J1VVVM05YCTS61G7V3KC6
+      requestBody:
+        required: true
+        content:
+          application/json:
+            schema:
+              type: object
+              required:
+                - items
+              properties:
+                items:
+                  type: array
+                  items:
+                    type: object
+                    required:
+                      - purchase_item_id
+                      - item_id
+                    properties:
+                      purchase_item_id:
+                        type: string
+                        example: purchaseitem_01HC3J1VVVM05YCTS61G7V3KC6
+                      item_id:
+                        type: string
+                        example: item_01HC3J1VVVM05YCTS61G7V3KC6
+                      quantity:
+                        type: number
+                        description: The quantity of the item in Digitax to which the purchase item is being linked. If 0, no stock will be added for the item
+                        example: 10
+      responses:
+        default:
+          description: Error response
+          content:
+            application/json:
+              schema:
+                $ref: "#/components/schemas/Error"
+        "200":
+          description: Success
+          content:
+            application/json:
+              schema:
+                $ref: "#/components/schemas/Purchase"
+  /purchases/{purchase_id}/review:
+    put:
+      tags:
+        - Purchases
+      summary: Approve or reject a purchase
+      description: Approve or reject a purchase
+      security:
+        - apiKeyAuth: []
+      parameters:
+        - in: path
+          name: purchase_id
+          required: true
+          schema:
+            type: string
+          description: Purchase id
+          example: purchase_01HC3J1VVVM05YCTS61G7V3KC6
+      requestBody:
+        required: true
+        content:
+          application/json:
+            schema:
+              type: object
+              required:
+                - reject
+              properties:
+                reject:
+                  type: boolean
+                  description: Whether or not to reject the purchase
+                  example: false
+                comment:
+                  type: string
+                  example: double entry
+      responses:
+        default:
+          description: Error response
+          content:
+            application/json:
+              schema:
+                $ref: "#/components/schemas/Error"
+        "200":
+          description: Success
+          content:
+            application/json:
+              schema:
+                $ref: "#/components/schemas/Purchase"
+  /sales:
+    post:
+      tags:
+        - Sales
+      summary: Add sale
+      description: Add sale
+      security:
+        - apiKeyAuth: []
+      requestBody:
+        required: true
+        content:
+          application/json:
+            schema:
+              type: object
+              required:
+                - trader_invoice_number
+                - items
+                - sale_date
+                - currency_code
+                - kind
+              properties:
+                kind:
+                  type: string
+                  enum: [NORMAL, LPO, EXPORT]
+                  example: NORMAL
+                sale_date:
+                  type: string
+                  format: date
+                  example: "2024-08-13"
+                currency_code:
+                  type: string
+                  example: "ZMW"
+                customer_tpin:
+                  type: string
+                  example: "1065478391"
+                customer_name:
+                  type: string
+                  example: John Doe
+                customer_phone:
+                  type: string
+                  example: "0651234567"
+                customer_id:
+                  type: string
+                  example: customer_01J53RMNH66ADPH81DTV5MCZ3Y
+                trader_invoice_number:
+                  type: string
+                  description: Invoice number on the taxpayer's Certified Invoicing Solution (CIS), must be unique across all sale types
+                  example: "12345678901"
+                exchange_rate:
+                  type: number
+                  description: "Required when creating a sale with a foreign currency"
+                  example: 123.45
+                destination_country_code:
+                  type: string
+                  description: "Required when creating an Export Sale"
+                  example: "KE"
+                lpo_number:
+                  type: string
+                  description: "Required when creating an LPO Sale"
+                  example: "K37343645634534E"
+                payment_type_code:
+                  type: string
+                  example: "07"
+                callback_url:
+                  type: string
+                  example: https://example.com/callback
+                items:
+                  type: array
+                  items:
+                    type: object
+                    required:
+                      - item_id
+                      - quantity
+                      - unit_price
+                      - discount_rate
+                      - discount_amount
+                      - total_amount
+                    properties:
+                      item_id:
+                        type: string
+                        example: item_01J55G02W1TY6YVFBMJHYKCENK
+                      quantity:
+                        type: number
+                        example: 1
+                      unit_price:
+                        type: number
+                        description: Amount up to 4 decimal places
+                        example: 1000.0000
+                      total_amount:
+                        type: number
+                        description: Amount up to 4 decimal places
+                        example: 1000.0000
+                      package_unit_quantity:
+                        type: number
+                        example: 1
+                      discount_rate:
+                        type: number
+                        description: Discount rate in decimal form i.e. 0.1 = 10%,
+                        maximum: 1
+                        example: 0
+                      discount_amount:
+                        type: number
+                        description: Amount up to 4 decimal places
+                        example: 0
+      responses:
+        default:
+          description: Error response
+          content:
+            application/json:
+              schema:
+                $ref: "#/components/schemas/Error"
+        "201":
+          description: Success
+          content:
+            application/json:
+              schema:
+                $ref: "#/components/schemas/Sale"
+    get:
+      tags:
+        - Sales
+      summary: List normal sales
+      description: List normal sales
+      security:
+        - apiKeyAuth: []
+      parameters:
+        - $ref: "#/components/parameters/Before"
+        - $ref: "#/components/parameters/After"
+        - $ref: "#/components/parameters/PageSize"
+      responses:
+        default:
+          description: Error response
+          content:
+            application/json:
+              schema:
+                $ref: "#/components/schemas/Error"
+        "200":
+          description: Success
+          content:
+            application/json:
+              schema:
+                type: object
+                required:
+                  - pagination
+                  - data
+                properties:
+                  pagination:
+                    $ref: "#/components/schemas/Pagination"
+                  data:
+                    type: array
+                    items:
+                      $ref: "#/components/schemas/Sale"
+  /credit-notes:
+    post:
+      tags:
+        - Sales
+      summary: Add credit note
+      description: Add credit note
+      security:
+        - apiKeyAuth: []
+      requestBody:
+        required: true
+        content:
+          application/json:
+            schema:
+              type: object
+              required:
+                - items
+                - return_date
+                - sale_id
+                - trader_invoice_number
+                - refund_reason_code
+              properties:
+                return_date:
+                  type: string
+                  format: date
+                  example: "2024-08-13"
+                sale_id:
+                  type: string
+                  example: "sale_01J55QCA52Q66R42AXNEA8PRYW"
+                refund_reason_code:
+                  type: string
+                  example: "01"
+                trader_invoice_number:
+                  type: string
+                  description: Invoice number on the taxpayer's Certified Invoicing Solution (CIS), must be unique across all sale types
+                  example: "12345678901"
+                callback_url:
+                  type: string
+                  example: https://example.com/callback
+                items:
+                  type: array
+                  items:
+                    type: object
+                    required:
+                      - item_id
+                      - quantity
+                      - unit_price
+                      - discount_rate
+                      - discount_amount
+                      - total_amount
+                    properties:
+                      item_id:
+                        type: string
+                        example: item_01J55G02W1TY6YVFBMJHYKCENK
+                      quantity:
+                        type: integer
+                        example: 1
+                      unit_price:
+                        type: number
+                        example: 1000
+                      total_amount:
+                        type: number
+                        example: 1000
+                      package_unit_quantity:
+                        type: number
+                        example: 1
+                      discount_rate:
+                        type: number
+                        example: 0
+                      discount_amount:
+                        type: number
+                        example: 0
+      responses:
+        default:
+          description: Error response
+          content:
+            application/json:
+              schema:
+                $ref: "#/components/schemas/Error"
+        "201":
+          description: Success
+          content:
+            application/json:
+              schema:
+                $ref: "#/components/schemas/Sale"
+    get:
+      tags:
+        - Sales
+      summary: List credit notes
+      description: List credit notes
+      security:
+        - apiKeyAuth: []
+      parameters:
+        - $ref: "#/components/parameters/Before"
+        - $ref: "#/components/parameters/After"
+        - $ref: "#/components/parameters/PageSize"
+      responses:
+        default:
+          description: Error response
+          content:
+            application/json:
+              schema:
+                $ref: "#/components/schemas/Error"
+        "200":
+          description: Success
+          content:
+            application/json:
+              schema:
+                type: object
+                required:
+                  - pagination
+                  - data
+                properties:
+                  pagination:
+                    $ref: "#/components/schemas/Pagination"
+                  data:
+                    type: array
+                    items:
+                      $ref: "#/components/schemas/Sale"
+  /debit-notes:
+    post:
+      tags:
+        - Sales
+      summary: Add debit note
+      description: Add debit note
+      security:
+        - apiKeyAuth: []
+      requestBody:
+        required: true
+        content:
+          application/json:
+            schema:
+              type: object
+              required:
+                - items
+                - debit_date
+                - sale_id
+                - trader_invoice_number
+              properties:
+                debit_date:
+                  type: string
+                  example: "2024-08-13"
+                  format: date
+                sale_id:
+                  type: string
+                  example: "sale_01J55QCA52Q66R42AXNEA8PRYW"
+                debit_reason_code:
+                  type: string
+                  example: "01"
+                trader_invoice_number:
+                  type: string
+                  description: Invoice number on the taxpayer's Certified Invoicing Solution (CIS), must be unique across all sale types
+                  example: "12345678901"
+                callback_url:
+                  type: string
+                  example: https://example.com/callback
+                items:
+                  type: array
+                  items:
+                    type: object
+                    required:
+                      - item_id
+                      - quantity
+                      - unit_price
+                      - discount_rate
+                      - discount_amount
+                      - total_amount
+                    properties:
+                      item_id:
+                        type: string
+                        example: item_01J55G02W1TY6YVFBMJHYKCENK
+                      unit_price:
+                        type: number
+                        example: 1000
+                      total_amount:
+                        type: number
+                        example: 1000
+                      quantity:
+                        type: integer
+                        example: 1
+                      package_unit_quantity:
+                        type: number
+                        example: 1
+                      discount_rate:
+                        type: number
+                        example: 0
+                      discount_amount:
+                        type: number
+                        example: 0
+      responses:
+        default:
+          description: Error response
+          content:
+            application/json:
+              schema:
+                $ref: "#/components/schemas/Error"
+        "201":
+          description: Success
+          content:
+            application/json:
+              schema:
+                $ref: "#/components/schemas/Sale"
+    get:
+      tags:
+        - Sales
+      summary: List debit notes
+      description: List debit notes
+      security:
+        - apiKeyAuth: []
+      parameters:
+        - $ref: "#/components/parameters/Before"
+        - $ref: "#/components/parameters/After"
+        - $ref: "#/components/parameters/PageSize"
+      responses:
+        default:
+          description: Error response
+          content:
+            application/json:
+              schema:
+                $ref: "#/components/schemas/Error"
+        "200":
+          description: Success
+          content:
+            application/json:
+              schema:
+                type: object
+                required:
+                  - pagination
+                  - data
+                properties:
+                  pagination:
+                    $ref: "#/components/schemas/Pagination"
+                  data:
+                    type: array
+                    items:
+                      $ref: "#/components/schemas/Sale"
+  /sales/{sale_id}:
+    get:
+      tags:
+        - Sales
+      summary: Get sale (including credit note, debit note, lpo sale and export sale)
+      description: Get sale (including credit note, debit note, lpo sale and export sale)
+      security:
+        - apiKeyAuth: []
+      parameters:
+        - in: path
+          name: sale_id
+          required: true
+          schema:
+            type: string
+            description: Sale ID on DigiTax
+            example: sale_01HC3HTDAXQ50E07CWR2A2CFBD
+      responses:
+        default:
+          description: Error response
+          content:
+            application/json:
+              schema:
+                $ref: "#/components/schemas/Error"
+        "200":
+          description: Success
+          content:
+            application/json:
+              schema:
+                $ref: "#/components/schemas/Sale"
+  /stock/adjust:
+    put:
+      tags:
+        - Stock
+      summary: Adjust item stock
+      description: Adjust item stock
+      security:
+        - apiKeyAuth: []
+      requestBody:
+        required: true
+        content:
+          application/json:
+            schema:
+              type: object
+              required:
+                - item_id
+                - quantity
+                - action
+                - movement_type
+              properties:
+                item_id:
+                  type: string
+                  description: Item ID in DigiTax
+                  example: item_01HC3J1VVVM05YCTS61G7V3KC6
+                quantity:
+                  type: number
+                  description: Stock quantity
+                  example: 100
+                action:
+                  type: string
+                  enum: [ADD, DEDUCT]
+                  description: Adjust type
+                  example: ADD
+                movement_type:
+                  type: string
+                  description: Stock movement type code
+                  example: "01"
+      responses:
+        default:
+          description: Error response
+          content:
+            application/json:
+              schema:
+                $ref: "#/components/schemas/Error"
+        "200":
+          description: Success
+          content:
+            application/json:
+              schema:
+                type: object
+                required:
+                  - id
+                  - item_code
+                  - stock_quantity
+                properties:
+                  id:
+                    type: string
+                    example: item_01HC3J1VVVM05YCTS61G7V3KC6
+                  item_code:
+                    type: string
+                    example: KE1PD-U230411121122
+                  stock_quantity:
+                    type: number
+                    minimum: 0
+                    example: 300
+  /notices:
+    get:
+      summary: Get list of ZRA notices for business
+      tags:
+        - Notices
+      security:
+        - apiKeyAuth: []
+      responses:
+        default:
+          description: Error response
+          content:
+            application/json:
+              schema:
+                $ref: "#/components/schemas/Error"
+        "200":
+          description: Success
+          content:
+            application/json:
+              schema:
+                type: array
+                items:
+                  $ref: "#/components/schemas/Notice"
+components:
+  schemas:
+    Success:
+      type: object
+      required:
+        - message
+      properties:
+        message:
+          type: string
+    Error:
+      type: object
+      required:
+        - message
+        - code
+      properties:
+        message:
+          type: string
+        code:
+          type: string
+    FetchMeta:
+      type: object
+      required:
+        - last_updated
+      properties:
+        last_updated:
+          type: string
+          example: 2023-02-02T21:00:00.000Z
+          description: Timestamp when the data was last updated from ZRA
+    Notice:
+      type: object
+      required:
+        - notice_number
+        - notice_date
+        - title
+        - content
+        - by
+      properties:
+        notice_number:
+          type: string
+          example: 03
+          description: Notice number from ZRA
+        notice_date:
+          type: string
+          description: Notice date-time in IS0 8601 format
+          example: 2023-02-02T21:00:00.000Z
+        title:
+          type: string
+          example: Call to Action
+        content:
+          type: string
+          example: Call to Action
+        by:
+          type: string
+          example: ZAMBIA REVENUE AUTHORITY
+        detail_url:
+          type: string
+          example: https://hello.zra.go.ke
+    Branch:
+      type: object
+      required:
+        - id
+        - tax_pin
+        - branch_office_id
+        - is_test
+        - is_live
+      properties:
+        id:
+          type: string
+          example: branch_01HC3J1VVVM05YCTS61G7V3KC6
+        tax_pin:
+          type: string
+          description: Branch ZRA PIN
+          example: 1012345678
+        branch_office_id:
+          type: string
+          description: Branch Office ID
+          example: "000"
+        branch_office_name:
+          type: string
+          description: Branch Office Name
+          example: Head Office
+        branch_status_code:
+          type: string
+          enum: ["01", "02"]
+          description: Branch Status Code
+          example: "01"
+        province_name:
+          type: string
+          description: Province Name
+          example: LUSAKA
+        sub_county_name:
+          type: string
+          description: Sub County Name
+          example: Lusaka
+        sector_name:
+          type: string
+          description: Sector Name
+          example: CBD
+        location_description:
+          type: string
+          description: Location Description
+          example: 1st Floor
+        manager_name:
+          type: string
+          description: Manager Name
+          example: John Doe
+        manager_contact:
+          type: string
+          description: Manager Contact
+          example: "712345678"
+        manager_email:
+          type: string
+          description: Manager Email
+          example: manager@email.com
+        is_head_office:
+          type: boolean
+          description: Is Head Office
+          example: true
+        is_test:
+          type: boolean
+          description: Is this a test business? Test businesses can only be used within the sanbox environment
+          example: true
+        is_live:
+          type: boolean
+          description: Has the business been initialised successfully on Digitax?
+          example: true
+    Customer:
+      type: object
+      required:
+        - id
+        - customer_tpin
+      properties:
+        id:
+          type: string
+          description: Customer ID
+          example: customer_01HC3HTDAXQ50E07CWR2A2CFBD
+        customer_name:
+          type: string
+          description: Customer Name
+          example: John Doe
+        email:
+          type: string
+          description: Customer Email
+          example: john@doe.com
+        is_lpo:
+          type: boolean
+          description: Is this a Local Purchase Order (LPO) customer?
+          example: false
+        phone:
+          type: string
+          description: Customer Phone Number
+          example: "+260712345678"
+        customer_tpin:
+          type: string
+          description: Customer Tax Identification Number (TIN)
+          example: "8754637189"
+        address:
+          type: string
+          description: Customer physical address
+          example: "5 Aluguntugui Road, Lusaka"
+    Import:
+      type: object
+      required:
+        - id
+        - task_code
+        - declaration_date
+        - item_sequence
+        - declaration_number
+        - hs_code
+        - item_name
+        - origin_nation_code
+        - import_item_status_code
+        - export_nation_code
+        - package
+        - package_unit_code
+        - quantity
+        - quantity_unit_code
+        - gross_weight
+        - net_weight
+        - invoice_foreign_currency_amount
+        - invoice_foreign_currency_code
+        - invoice_foreign_currency_rate
+        - status
+      properties:
+        id:
+          type: string
+          example: import_01HC3J1VVVM05YCTS61G7V3KC6
+        task_code:
+          type: string
+          example: "202302081365045"
+        declaration_date:
+          type: string
+          example: 2023-02-02T21:00:00.000Z
+          format: date-time
+        item_sequence:
+          type: integer
+          example: 1
+        declaration_number:
+          type: string
+          example: 23BUSIM400040606
+        hs_code:
+          type: string
+          example: "30049000"
+        item_name:
+          type: string
+          example: MEDICAMENT; NORMAL SALINE 0.9% I.V. [ NS ]; CT; 1450; 500ML;
+        origin_nation_code:
+          type: string
+          example: UG
+        import_item_status_code:
+          type: string
+          example: "2"
+        export_nation_code:
+          type: string
+          example: UG
+        package:
+          type: integer
+          example: 17
+        package_unit_code:
+          type: string
+          example: KGM
+        quantity:
+          type: integer
+          example: 23925
+        quantity_unit_code:
+          type: string
+          example: KGM
+        gross_weight:
+          type: integer
+          example: 24650
+        net_weight:
+          type: integer
+          example: 23925
+        supplier_name:
+          type: string
+          example: ABACUS PARENTERAL DRUGS LIMITED
+        agent_name:
+          type: string
+          example: Kandito International Company Kenya Limited
+        invoice_foreign_currency_amount:
+          type: number
+          example: 14355
+        invoice_foreign_currency_code:
+          type: string
+          example: USD
+        invoice_foreign_currency_rate:
+          type: number
+          example: 124.45
+        status:
+          type: string
+          enum: [PENDING, FAILED, COMPLETED]
+          description: item status against ZRA VSDC
+          example: COMPLETED
+        item_id:
+          type: string
+          example: item_01HC3J1VVVM05YCTS61G7V3KC6
+        item_class_code:
+          type: string
+          example: "30103604"
+        item_code:
+          type: string
+          example: KE2CRM0000015
+        remarks:
+          type: string
+          example: unknown item
+        approved_quantity:
+          type: number
+          example: 12
+    Item:
+      type: object
+      required:
+        - id
+        - item_class_code
+        - item_type_code
+        - item_name
+        - item_number
+        - item_code
+        - active
+        - origin_nation_code
+        - package_unit_code
+        - quantity_unit_code
+        - vat_category_code
+        - default_unit_price
+        - is_stock_item
+        - stock_quantity
+        - status
+      properties:
+        id:
+          type: string
+          description: Item ID in Digitax
+          example: item_01HC3J1VVVM05YCTS61G7V3KC6
+        item_class_code:
+          type: string
+          description: The item class code of the item
+          example: 99020000
+        item_type_code:
+          type: string
+          description: The item type code of the item
+          example: 3
+        item_name:
+          type: string
+          description: The name of the item
+          example: DigiTax Product 01
+        item_number:
+          type: string
+          description: A unique human readable identifier for the item
+          example: IT24-234-565378-VFRDEF
+        origin_nation_code:
+          type: string
+          description: The country of origin code of the item
+          example: KE
+        package_unit_code:
+          type: string
+          description: The package unit code of the item
+          example: NT
+        quantity_unit_code:
+          type: string
+          description: The quantity unit code of the item
+          example: U
+        vat_category_code:
+          type: string
+          description: The VAT category code of the item
+          example: D
+        ipl_category_code:
+          type: string
+          description: The Insurance Premium Levy category code of the item
+          example: IPL1
+        tl_category_code:
+          type: string
+          description: The Tourism Levy category code of the item
+          example: TL
+        excise_category_code:
+          type: string
+          description: The Excise duty category code of the item
+          example: EXEEG
+        default_unit_price:
+          type: number
+          description: The default price of the item up to 4 decimal places
+          example: 14.0000
+        item_code:
+          type: string
+          description: The assigned item code of the item
+          example: ZM2BGBG0000004
+        is_stock_item:
+          type: boolean
+          description: Indicates whether the item is a stock item or not.
+          example: true
+        stock_quantity:
+          type: number
+          description: The available stock balance
+          minimum: 0
+          example: 1000
+        active:
+          type: boolean
+          description: Indicates whether the item is active or not
+          example: true
+        status:
+          type: string
+          enum: [PENDING, FAILED, COMPLETED]
+          description: item status against ZRA VSDC
+          example: COMPLETED
+        bar_code:
+          type: string
+          description: The bar code or unique product code(UPC) of the item
+          example: "012345678905"
+        recommended_retail_price:
+          type: number
+          description: Recommended Retailed Price as set by the manufacturer
+          example: 1000
+
+    Pagination:
+      type: object
+      properties:
+        next:
+          type: string
+          example: item_01HC3J1VVVM05YCTS61G7V3KC6
+        previous:
+          type: string
+          example: item_01HC3J1VVVM05YCTS61G7V3KC6
+        page_size:
+          type: integer
+          example: 20
+    Sale:
+      type: object
+      required:
+        - id
+        - sales_tax_summary
+        - customer_id
+        - receipt_type_code
+        - sale_number
+        - status
+        - item_list
+        - sale_date
+        - created_at
+      properties:
+        id:
+          type: string
+          example: sale_01HC3HTDAXQ50E07CWR2A2CFBD
+        trader_invoice_number:
+          type: string
+          example: "12345678901"
+        original_sale_id:
+          type: string
+          example: "sale_01HC3HTDAXQ50E07CWR2A2CFBD"
+        receipt_type_code:
+          type: string
+          example: "S"
+        sale_number:
+          type: string
+          example: "SAL24-234-565378-VFRDEF"
+        kind:
+          type: string
+          enum: [NORMAL, LPO, EXPORT]
+          example: NORMAL
+        receipt_number:
+          type: integer
+          example: 38
+        lpo_number:
+          type: string
+        destination_country_code:
+          type: string
+          example: "KE"
+        reason_code:
+          type: string
+          example: "01"
+        currency_code:
+          type: string
+          example: "ZMW"
+        exchange_rate:
+          type: number
+          example: 123.45
+        sales_tax_summary:
+          type: object
+          required:
+            - taxable_amount_vat
+            - taxable_amount_ipl
+            - taxable_amount_tl
+            - taxable_amount_excise
+            - tax_amount_vat
+            - tax_amount_ipl
+            - tax_amount_tl
+            - tax_amount_excise
+          properties:
+            taxable_amount_vat:
+              type: number
+              description: VAT taxable amount
+              example: 0
+            taxable_amount_ipl:
+              type: number
+              description: Insurance Premium Levy taxable amount
+              example: 517.24
+            taxable_amount_tl:
+              type: number
+              description: Tourism Levy taxable amount
+              example: 0
+            taxable_amount_excise:
+              type: number
+              description: Excise taxable amount
+              example: 0
+            tax_amount_vat:
+              type: number
+              description: VAT tax amount
+              example: 0
+            tax_amount_ipl:
+              type: number
+              description: Insurance Premium Levy tax amount
+              example: 517.24
+            tax_amount_tl:
+              type: number
+              description: Tourism Levy tax amount
+              example: 0
+            tax_amount_excise:
+              type: number
+              description: Excise tax amount
+              example: 0
+        customer_id:
+          type: string
+          example: customer_01HC3HTDAXQ50E07CWR2A2CFBD
+        internal_data:
+          type: string
+          example: PB3ZSZP3RZR3AUPYBYLUTFJDIA
+        receipt_signature:
+          type: string
+          example: 3JYZVPTPMYBGHG4A
+        receipt_url:
+          type: string
+          example: https://sandboxportal.zra.org.zm/common/link/ebm/receipt/indexEbmReceiptData?Data=2002720806000YXO7XG3HRQ7OOWDH
+          format: url
+        status:
+          type: string
+          enum: [pending, failed, completed]
+          description: status against ZRA
+          example: completed
+        sale_date:
+          type: string
+          example: "2024-08-13"
+        created_at:
+          type: string
+          example: "2024-12-02 12:51:32.491899+00"
+        item_list:
+          type: array
+          items:
+            $ref: "#/components/schemas/SaleItem"
+    SaleItem:
+      type: object
+      required:
+        - id
+        - quantity
+        - unit_price
+        - supply_price
+        - discount_rate
+        - discount_amount
+        - item_id
+        - total_amount
+        - vat_tax_amount
+        - vat_taxable_amount
+      properties:
+        id:
+          type: string
+          example: purchaseitem_01HC3J1VVVM05YCTS61G7V3KC6
+        quantity:
+          type: number
+          example: 10
+        total_amount:
+          type: number
+          description: Amount up to 4 decimal places
+          example: 1160.0000
+        vat_tax_amount:
+          type: number
+          description: Amount up to 4 decimal places
+          example: 160.0000
+        vat_taxable_amount:
+          type: number
+          description: Amount up to 4 decimal places
+          example: 1000.0000
+        ipl_tax_amount:
+          type: number
+          description: Amount up to 4 decimal places
+          example: 160.0000
+        ipl_taxable_amount:
+          type: number
+          description: Amount up to 4 decimal places
+          example: 1000.0000
+        tl_tax_amount:
+          type: number
+          description: Amount up to 4 decimal places
+          example: 160.0000
+        tl_taxable_amount:
+          type: number
+          description: Amount up to 4 decimal places
+          example: 1000.0000
+        excise_tax_amount:
+          type: number
+          description: Amount up to 4 decimal places
+          example: 160.0000
+        excise_taxable_amount:
+          type: number
+          description: Amount up to 4 decimal places
+          example: 1000.0000
+        unit_price:
+          type: number
+          description: The price of the item up to 4 decimal places
+          example: 116.0000
+        supply_price:
+          type: number
+          description: The price up to 4 decimal places
+          example: 1160.0000
+        discount_rate:
+          type: number
+          example: 0
+        discount_amount:
+          type: number
+          example: 0
+        item_id:
+          type: string
+          example: item_01HC3J1VVVM05YCTS61G7V3KC6
+    Supplier:
+      type: object
+      required:
+        - id
+        - supplier_tpin
+      properties:
+        id:
+          type: string
+          description: Supplier ID
+          example: supplier_01J56FWS9KV3KAS0RHD4QJ1QCT
+        supplier_name:
+          type: string
+          description: Supplier Name
+          example: Elite Books
+        email:
+          type: string
+          description: Supplier Email
+          example: elite@books.com
+        phone:
+          type: string
+          description: Supplier Phone Number
+          example: "+260712345678"
+        supplier_tpin:
+          type: string
+          description: Supplier Tax Identification Number (TIN)
+          example: "1234562718"
+    Purchase:
+      type: object
+      required:
+        - id
+        - invoice_number
+        - receipt_type_code
+        - payment_type_code
+        - purchase_date
+        - purchase_number
+        - supplier_invoice_number
+        - supplier_id
+        - item_list
+        - status
+        - purchase_status_code
+      properties:
+        id:
+          type: string
+          example: purchase_01HC3J1VVVM05YCTS61G7V3KC6
+        invoice_number:
+          type: integer
+          example: 4000
+        receipt_type_code:
+          type: string
+          example: "P"
+        payment_type_code:
+          type: string
+          example: "07"
+        purchase_date:
+          type: string
+          example: "20230620"
+        purchase_number:
+          type: string
+          example: PUR24-234-565378-VFRDEF
+        supplier_id:
+          type: string
+          example: "supplier_01J4PRP9V3W2R42EPPCR8WRY47"
+        supplier_invoice_number:
+          type: integer
+          example: 12
+        status:
+          type: string
+          enum: [PENDING, FAILED, COMPLETED]
+          description: status against ZRA
+          example: COMPLETED
+        purchase_status_code:
+          type: string
+          description: purchase status code
+          example: 02
+        item_list:
+          type: array
+          items:
+            $ref: "#/components/schemas/PurchaseItem"
+    PurchaseItem:
+      type: object
+      required:
+        - id
+        - quantity
+        - unit_price
+        - supply_price
+        - discount_rate
+        - discount_amount
+        - item_id
+        - total_amount
+        - vat_tax_amount
+        - vat_taxable_amount
+        - item_name
+        - item_class_code
+        - item_code
+      properties:
+        id:
+          type: string
+          example: purchaseitem_01HC3J1VVVM05YCTS61G7V3KC6
+        quantity:
+          type: number
+          example: 10
+        total_amount:
+          type: number
+          description: Amount up to 4 decimal places
+          example: 1160.0000
+        vat_tax_amount:
+          type: number
+          description: Amount up to 4 decimal places
+          example: 160.0000
+        vat_taxable_amount:
+          type: number
+          description: Amount up to 4 decimal places
+          example: 1000.0000
+        ipl_tax_amount:
+          type: number
+          description: Amount up to 4 decimal places
+          example: 160.0000
+        ipl_taxable_amount:
+          type: number
+          description: Amount up to 4 decimal places
+          example: 1000.0000
+        tl_tax_amount:
+          type: number
+          description: Amount up to 4 decimal places
+          example: 160.0000
+        tl_taxable_amount:
+          type: number
+          description: Amount up to 4 decimal places
+          example: 1000.0000
+        excise_tax_amount:
+          type: number
+          description: Amount up to 4 decimal places
+          example: 160.0000
+        excise_taxable_amount:
+          type: number
+          description: Amount up to 4 decimal places
+          example: 1000.0000
+        unit_price:
+          type: number
+          description: The price of the item up to 4 decimal places
+          example: 116.0000
+        supply_price:
+          type: number
+          description: The price up to 4 decimal places
+          example: 1160.0000
+        discount_rate:
+          type: number
+          example: 0
+        discount_amount:
+          type: number
+          example: 0
+        item_id:
+          type: string
+          example: item_01HC3J1VVVM05YCTS61G7V3KC6
+        packing_unit_code:
+          type: string
+          example: "BG"
+        item_name:
+          type: string
+          example: "African Literature"
+        item_class_code:
+          type: string
+          example: "50102518"
+        item_code:
+          type: string
+          example: "20056"
+        approved_quantity:
+          type: number
+          example: 1
+    ItemComposition:
+      type: object
+      required:
+        - id
+        - item_id
+        - composition_item_id
+        - composition_item_quantity
+        - business_id
+      properties:
+        id:
+          type: string
+          example: itemcomposition_01J58XV8W45SHFZGKVERMB5XCA
+        item_id:
+          type: string
+          example: item_01HC3J1VVVM05YCTS61G7V3KC6
+        composition_item_id:
+          type: string
+          example: item_01J47XGVT004DFVCVFYN50SRSF
+        composition_item_quantity:
+          type: integer
+          example: 30
+  parameters:
+    After:
+      in: query
+      name: after
+      required: false
+      schema:
+        type: string
+        description: When paginating results, a pointer to an ID after which we want results
+        example: item_01HC3J1VVVM05YCTS61G7V3KC6
+    Before:
+      in: query
+      name: before
+      required: false
+      schema:
+        type: string
+        description: When paginating results, a pointer to an ID before which we want results
+        example: item_01HC3J1VVVM05YCTS61G7V3KC6
+    PageSize:
+      in: query
+      name: page_size
+      required: false
+      schema:
+        type: integer
+        maximum: 20
+        minimum: 1
+        description: The maximum number of items to return per page, defaults to 20
+        example: 20
+  securitySchemes:
+    apiKeyAuth:
+      type: apiKey
+      in: header
+      name: X-API-Key
+tags: []

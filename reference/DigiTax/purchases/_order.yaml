@@ -1,0 +1,5 @@
+- get_purchases
+- post_purchases
+- get_purchases-purchase-id
+- put_purchases-purchase-id-link-items
+- put_purchases-purchase-id-review
