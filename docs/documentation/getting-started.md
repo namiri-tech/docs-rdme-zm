@@ -5,6 +5,25 @@ excerpt: >-
   jiffy!
 hidden: false
 ---
+<Cards columns={2}>
+  <Card title="Navigation" icon="fa-compass">
+    If you're new to the DigiTax Zambia API Hub, learn how to navigate our pages [here](https://zm.docs.digitax.tech/docs/how-to-use-this-site).
+  </Card>
+
+  <Card title="Support" icon="fa-question">
+    If you get stuck, or have questions, [email us](mailto:support@namiri.tech) OR\
+    Talk to us via the **DigiTax chat** on the bottom right of any page.
+  </Card>
+
+  <Card title="ZRA integration with DigiTax" icon="fa-bars">
+    Explore this page and other detailed guide pages to gain understanding of the ZRA Smart Invoicing System and how DigiTax integration works.
+  </Card>
+
+  <Card title="DigiTax Zambia API Reference" icon="fa-plug">
+    Get the pre-requisites, explore the API endpoints, and learn its feature set via our **interactive API reference** [here](https://zm.docs.digitax.tech/reference).
+  </Card>
+</Cards>
+
 ## What is DigiTax?
 
 **DigiTax is a ZRA-licenced smart invoice solutions provider authorized to provide tax\
