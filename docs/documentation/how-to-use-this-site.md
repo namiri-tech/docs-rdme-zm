@@ -30,3 +30,5 @@ Explore the API endpoints [here](/reference).
 ### Code samples
 
 You can make use of up to 19 programming language code samples for requests to get you started, regardless of the language you're using.
+
+<Image align="center" width="360px" src="https://files.readme.io/df7cc057524b536f8860b3ad39dcb1560b1e45ab875670f3391624bc59d06b91-code-examples.png" />
