@@ -25,13 +25,13 @@ Below is a link to a recording showing how to create a Smart Invoice on the API.
 
 Below is a ZRA smart invoice with sections highlighted.
 
-***
+<Image align="center" border={true} caption="ZRA smart sales invoice with key sections highlighted" src="https://files.readme.io/a43b60c8e9a6255b674551aab17fab5d178048515c00c90111c665a2a0944179-C.png" />
 
 An ZRA smart invoice has three key components: (They are highlighted above)
 
 1. A **QR code** redirecting to a URL on "zra.org.zm"
 
-   The QR code above redirects to this URL: \<[https://sandboxportal.zra.org.zm/common/link/ebm/receipt/indexEbmReceiptData?Data=2002720806000WOV5SPYFHNJR6K4F](https://sandboxportal.zra.org.zm/common/link/ebm/receipt/indexEbmReceiptData?Data=2002720806000WOV5SPYFHNJR6K4F)>
+   The QR code above redirects to this URL: [https://sandboxportal.zra.org.zm/common/link/ebm/receipt/indexEbmReceiptData?Data=2002720806000WOV5SPYFHNJR6K4F](https://sandboxportal.zra.org.zm/common/link/ebm/receipt/indexEbmReceiptData?Data=2002720806000WOV5SPYFHNJR6K4F)
 
    The structure is `https://sandboxportal.zra.org.zm/common/link/ebm/receipt/indexEbmReceiptData` `?Data=` `{TPIN} (10 digits)` `{ZRA Branch ID} (3 Digits)` `{Signature}`
 2. The **tax breakdown** of that invoice
@@ -40,3 +40,12 @@ An ZRA smart invoice has three key components: (They are highlighted above)
    * Invoice number
    * Signature
    * Internal Data
+
+## Creating a Smart invoice via DigiTax API
+
+To create a Smart invoice via the API, you need to:
+
+1. Create an item
+2. Add stock to that item (if it is stockable). If not, skip to step 3
+3. Make a sale
+4. Get the sale details
