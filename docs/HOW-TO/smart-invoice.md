@@ -56,19 +56,19 @@ To create a Smart invoice via the API, you need to:
 
 Below are these steps in detail.
 
-### 1. Create an item
+### 1/. Create an item
 
 Make a successful POST request to the items endpoint.
 
-### 2. Add stock to that item (if it is stockable). If note skip to step 3
+### 2/. Add stock to that item (if it is stockable). If note skip to step 3
 
 Make a successful POST request to the adjust_stock endpoint using the **ITEMS ID** returned in response to the previous request.
 
-### 3. Make a sale
+### 3/. Make a sale
 
 Make a successful POST request to the sales endpoint using the **ITEMS ID** returned in response to the request in step #1
 
-### 4. Get the sale details
+### 4/. Get the sale details
 
 Make a successful GET request to the sales endpoint using the **SALES ID** returned in response to the previous request.
 
