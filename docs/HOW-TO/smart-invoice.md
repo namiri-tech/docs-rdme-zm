@@ -7,8 +7,8 @@ metadata:
 ---
 We at Namiri Technologies, through our DigiTax Platform, have developed a suite of solutions:
 
-* **DigiTax App** (Mobile PWA) - Coming soon
-* **DigiTax Dashboard** (Web Browser-based Desktop application for e-invoicing) and
+* **DigiTax POS** (Android) - Coming soon on Google Play Store
+* **DigiTax Dashboard** (Responsive Web Browser-based Desktop application for e-invoicing) and
 * **DigiTax API** (for system-to-system integration without the issue of platform hopping).
 
 You can create an ZRA smart invoice through these three DigiTax solutions.
@@ -62,7 +62,7 @@ Make a successful POST request to the items endpoint.
 
 ### 2. Add stock to that item (if it is stockable). If note skip to step 3
 
-Make a successful POST request to the adjust\_stock endpoint using the **ITEMS ID** returned in response to the previous request.
+Make a successful POST request to the adjust_stock endpoint using the **ITEMS ID** returned in response to the previous request.
 
 ### 3. Make a sale
 
