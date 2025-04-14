@@ -56,6 +56,14 @@ Please copy the value that you generate for later use, as you will not see it fr
 
 ## API Keys management
 
-Once you generate an API key, you have the option of deactivate them.
+Once you generate an API key, you have the option to deactivate them (when necessary).
 
 Navigate to the "Integrations" menu and click on the "padlock" icon under the "Action" column.
+
+<Image align="center" src="https://files.readme.io/5ea35d2d4c3aacade4d37cb8d95797e68256a4af37472ce47b16f77e64c44669-A.png" />
+
+Click "Deactivate key" if you'd like to invalidate the key for API use.
+
+<Image align="center" width="360px" src="https://files.readme.io/5b994f64ef75fa1b2013be019cb7c444e20c750b1d57df44ba140cbf54f88df8-B.png" />
+
+*To making tax compliance less taxing.*
