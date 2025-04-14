@@ -60,7 +60,7 @@ Below are these steps in detail.
 
 Make a successful POST request to the items endpoint.
 
-### 2. Add stock to that item (if it is stockable). If note skip to step 3
+### 2. Add stock to that item (if it is stockable). If not, skip to step 3
 
 Make a successful POST request to the adjust\_stock endpoint using the **ITEMS ID** returned in response to the previous request.
 
