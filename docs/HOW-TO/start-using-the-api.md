@@ -10,11 +10,11 @@ metadata:
 
 Namiri Technologies, through our DigiTax Platform, have developed a suite of solutions:
 
-- DigiTax App (Mobile PWA),
-- DigiTax Dashboard (Web Browser-based Desktop application) AND
-- DigiTax API
+* DigiTax App (Mobile PWA),
+* DigiTax Dashboard (Web Browser-based Desktop application) AND
+* DigiTax API
 
->  The first two are powered by the DigiTax API :tada:
+> The first two are powered by the DigiTax API :tada:
 
 Below are the steps required to get up and running
 
@@ -23,11 +23,9 @@ Below are the steps required to get up and running
 The following are the steps to getting a sandbox business (for testing before you go LIVE)
 
 1. [Sign up on DigiTax](https://digitax.tech/sign-up)
-2. Create an organization and select the country.
-3. Create a business w/ TPIN `2002720806`
-4. Send an email to [support@namiri.tech](mailto:support@namiri.tech) requesting us to set it as a SANDBOX business
-5. Once your business is set as sandbox, you can now transact on the dashboard
-6. Create the API Key under "Integrations" tab.
+2. Create a profile and select the appropriate country.
+3. Create a business with a sample correctly formatted TPIN (Tax Payer Identification Number) like `2002720806` and **set it as a SANDBOX business**, with that, you can now transact on the dashboard.
+4. Create the API Key under the "Integrations" tab.
 
 Use the **X-API-Key** in your header when making API calls through the interactive API docs [here](/reference) OR via your integration during testing. This has a quick turn-around of a matter of hours. Do not wait for days 😊.
 
@@ -35,9 +33,29 @@ Use the **X-API-Key** in your header when making API calls through the interacti
 
 To go LIVE on the API, commercial conversations must be complete. If you wish to start those, email [info@namiri.tech](mailto:info@namiri.tech).
 
-Another business is to be created, not the one that's set as sandbox.
+Create another business with your TPIN (Tax Payer Identification Number) like `2002720806` and **set it as a LIVE business**.
 
-Once that business goes LIVE, you can go ahead and generate a API Key under "Integrations" tab. See screenshots below:
+Follow the steps shared in the email sent by the DigiTax system to your inbox as soon as you successfully create a business.
 
-Navigate to the "Integrations" menu.  
+Once that business goes LIVE, you can go ahead and generate an API Key under the "Integrations" tab. See screenshots below:
+
+Navigate to the "Integrations" menu.\
 Then select "Add API KEY"
+
+<Image align="center" src="https://files.readme.io/b97314a806049fc3042278a8abada343b28117206f44a2539a2c3ef33d29fc59-Integrations.png" />
+
+Enter a name and select "Api key". *Use "License key for DigiTax plugins*
+
+<Image align="center" width="360px" src="https://files.readme.io/39b934dd7778737ed94d8ec97daf8bdee27e4750abf6b04b4841a80245014e95-API-key.png" />
+
+Please copy the value that you generate for later use, as you will not see it from the dashboard on subsequent visits. Save it securely.
+
+> 👍 Your integration is LIVE 🎉
+>
+> Using the LIVE X-API-Key, you'll now be interacting with the production environment of ZRA Smart Invoice System
+
+## API Keys management
+
+Once you generate an API key, you have the option of deactivate them.
+
+Navigate to the "Integrations" menu and click on the "padlock" icon under the "Action" column.
