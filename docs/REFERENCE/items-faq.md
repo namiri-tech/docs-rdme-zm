@@ -1,7 +1,7 @@
 ---
 title: Items FAQ
 deprecated: false
-hidden: false
+hidden: true
 metadata:
   robots: index
 ---
