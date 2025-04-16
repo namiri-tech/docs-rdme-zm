@@ -1,5 +1,5 @@
 ---
-title: 'Getting Started: DigiTax and ZRA Smart Invoicing'
+title: 'Getting Started: DigiTax Zambia API and ZRA Smart Invoicing'
 excerpt: >-
   **DigiTax Zambia API Hub** contains guides and API reference pages for further
   understanding, equipping you on how to integrate with the ZRA Smart Invoicing
