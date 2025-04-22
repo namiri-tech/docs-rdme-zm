@@ -1,9 +1,10 @@
 ---
-title: Start using the API
+title: Start using the DigiTax Zambia API
 excerpt: All you need to start using the API
 deprecated: false
 hidden: false
 metadata:
+  title: Start using the DigiTax Zambia API
   robots: index
 ---
 ## DigiTax suite of products
@@ -24,10 +25,10 @@ The following are the steps to getting a sandbox business (for testing before yo
 
 1. [Sign up on DigiTax](https://digitax.tech/sign-up)
 2. Create a profile and select the appropriate country.
-3. Create a business with a sample correctly formatted TPIN (Tax Payer Identification Number) like `2002720806` and **set it as a SANDBOX business**, with that, you can now transact on the dashboard.
+3. Create a business with a sample correctly formatted TPIN (Tax Payer Identification Number) like `2002720806` and **set it as a TEST business**, with that, you can now transact on the dashboard.
 4. Create the API Key under the "Integrations" tab.
 
-Use the **X-API-Key** in your header when making API calls through the interactive API docs [here](/reference) OR via your integration during testing. This has a quick turn-around of a matter of hours. Do not wait for days 😊.
+Use the **X-API-Key** in your header when making API calls through the interactive API docs [here](/reference) OR via your integration during testing. This has a quick turn-around of a matter of minutes or hours. Do not wait for days 😊.
 
 ## Going LIVE
 
