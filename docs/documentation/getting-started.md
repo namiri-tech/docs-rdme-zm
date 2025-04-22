@@ -16,7 +16,7 @@ hidden: false
     Talk to us via the **DigiTax chat** on the bottom right of any page.
   </Card>
 
-  <Card title="ZRA integration with DigiTax" icon="fa-bars">
+  <Card title="ZRA Smart Invoice integration with DigiTax" icon="fa-bars">
     Explore this page and other detailed guide pages to gain understanding of the ZRA Smart Invoicing System and how DigiTax integration works.
   </Card>
 
