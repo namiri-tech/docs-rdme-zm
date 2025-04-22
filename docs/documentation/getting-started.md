@@ -30,9 +30,9 @@ hidden: false
 
   If you're looking for another country or the general homepage for DigiTax API, navigate to the [DigiTax API homepage](https://docs.digitax.tech), or country-specific API hub pages (ordered alphabetically):
 
-  * [DigiTax Kenya API hub](https://ke.docs.digitax.tech)
-  * [DigiTax Nigeria API hub](https://ng.docs.digitax.tech)
-  * **DigiTax Zambia API hub (You are here 🎉)**
+  * <i class="icon-guides" /> [DigiTax Kenya API hub](https://ke.docs.digitax.tech)
+  * <i class="icon-guides" /> [DigiTax Nigeria API hub](https://ng.docs.digitax.tech)
+  * <i class="icon-guides" /> **DigiTax Zambia API hub (You are here 🎉)**
 </Accordion>
 
 ## Electronic Tax Invoicing in Zambia
