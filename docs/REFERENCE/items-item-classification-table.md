@@ -19,6 +19,24 @@ To help you interpret the data, here are the column names and their definitions:
 
 ## Items Classification table
 
+### Sandbox(TEST) Item Classification Codes
+
+| itemClsCd | itemClsNm                                    | itemClsLvl | taxTyCd | mjrTgYn | useYn |
+| --------- | -------------------------------------------- | ---------- | ------- | ------- | ----- |
+| 56101530  | Storage cabinets                             | 4          |         |         | Y     |
+| 60121001  | Paintings                                    | 4          |         |         | Y     |
+| 50192402  | Nut or mixed spreads                         | 4          |         |         | Y     |
+| 50221109  | Maize or corn grain                          | 4          |         |         | Y     |
+| 50201714  | Non dairy creamers                           | 4          |         |         | Y     |
+| 39121441  | Electrical jumper cable                      | 4          |         |         | Y     |
+| 50301564  | Pink lady apples                             | 4          |         |         | Y     |
+| 72151301  | Residential painting service                 | 4          |         |         | Y     |
+| 78101804  | Relocation services                          | 4          |         |         | Y     |
+| 80101507  | Information technology consultation services | 4          |         |         | Y     |
+| 32121706  | Resistor or capacitor R/C networks           | 4          |         |         | Y     |
+
+# Production Item Classification Codes
+
 | itemClsCd | itemClsNm                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                      | itemClsLvl | taxTyCd | mjrTgYn | useYn |
 | --------- | ---------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------- | ---------- | ------- | ------- | ----- |
 | 99000000  | VAT Act                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                        | 1          |         |         | Y     |
