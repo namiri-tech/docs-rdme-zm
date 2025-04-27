@@ -165,7 +165,7 @@ Below is a breakdown of the required fields for creating a Credit Note, Debit No
 
       <td>
         -LPO number
-        -The item(s) used should be of VAT category C2 (Zero-rating Local Purchases Order transactions)
+        -The item(s) should belong to VAT category C2 (Zero-rated Local Purchase Order transactions).
       </td>
     </tr>
 
@@ -179,7 +179,7 @@ Below is a breakdown of the required fields for creating a Credit Note, Debit No
         -Payment Type
         -Exchange Rate - if the sale was made using a
         foreign currency
-        -The item(s) used should of VAT category C1 (Exports)
+        -The item(s) should belong to VAT category C1 (Exports)
       </td>
     </tr>
 
@@ -189,7 +189,7 @@ Below is a breakdown of the required fields for creating a Credit Note, Debit No
       </td>
 
       <td>
-        Should have an item created with a VAT category tax type B (Minimum Tax Value (MTV))
+        -The item(s) should belong to VAT category B (Minimum Tax Value (MTV))
       </td>
     </tr>
   </tbody>
