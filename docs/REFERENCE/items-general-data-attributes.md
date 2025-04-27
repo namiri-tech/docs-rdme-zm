@@ -615,4 +615,181 @@ Below are the attributes used in the API requests and responses above.
 
 ## Taxation Type Codes
 
-\--
+<HTMLBlock>{`
+<table>
+  <tr>
+   <td><strong>TAX TYPE CODE</strong>
+   </td>
+   <td><strong>TAX CATEGORY CODE</strong>
+   </td>
+   <td><strong>TAX CATEGORY NAME</strong>
+   </td>
+   <td><strong>TAX RATE</strong>
+   </td>
+  </tr>
+  <tr>
+   <td rowspan="8" ><strong>VAT</strong>
+   </td>
+   <td>A
+   </td>
+   <td>Standard Rated 
+   </td>
+   <td>16%
+   </td>
+  </tr>
+  <tr>
+   <td>B
+   </td>
+   <td>Minimum Taxable Value (MTV)
+   </td>
+   <td>MTV
+   </td>
+  </tr>
+  <tr>
+   <td>C1
+   </td>
+   <td>Exports
+   </td>
+   <td>0%
+   </td>
+  </tr>
+  <tr>
+   <td>C2
+   </td>
+   <td>Zero-rating Local Purchases Order transactions
+   </td>
+   <td>0%
+   </td>
+  </tr>
+  <tr>
+   <td>C3
+   </td>
+   <td>Zero-rated by nature
+   </td>
+   <td>0%
+   </td>
+  </tr>
+  <tr>
+   <td>D
+   </td>
+   <td>Exempt
+   </td>
+   <td>No tax charge
+   </td>
+  </tr>
+  <tr>
+   <td>RVAT
+   </td>
+   <td>Reverse VAT
+   </td>
+   <td>16%
+   </td>
+  </tr>
+  <tr>
+   <td>E
+   </td>
+   <td>Disbursement
+   </td>
+   <td>No tax charge
+   </td>
+  </tr>
+  <tr>
+   <td rowspan="2" ><strong>IPL</strong>
+   </td>
+   <td>IPL-1
+   </td>
+   <td>Insurance Premium Levy
+   </td>
+   <td>5%
+   </td>
+  </tr>
+  <tr>
+   <td>IPL-2
+   </td>
+   <td>Re-insurance
+   </td>
+   <td>Exempt
+   </td>
+  </tr>
+  <tr>
+   <td><strong>TL</strong>
+   </td>
+   <td>TL
+   </td>
+   <td>Tourism Levy
+   </td>
+   <td>1.50%
+   </td>
+  </tr>
+  <tr>
+   <td>
+   </td>
+   <td>F
+   </td>
+   <td>10% Statutory Service Charge
+   </td>
+   <td>No tax charge 
+   </td>
+  </tr>
+  <tr>
+   <td><strong>LED</strong>
+   </td>
+   <td>ECM
+   </td>
+   <td>Excise on Coal
+   </td>
+   <td>5%
+   </td>
+  </tr>
+  <tr>
+  <td>
+   </td>
+   <td>EXEEG
+   </td>
+   <td>Excise Electricity
+   </td>
+   <td>3%
+   </td>
+  </tr>
+  <tr>
+   <td><strong>TOT</strong>
+   </td>
+   <td>TOT
+   </td>
+   <td>Turnover Tax
+   </td>
+   <td>N/A
+   </td>
+  </tr>
+  <tr>
+   <td><strong>GTX</strong>
+   </td>
+   <td>GTX
+   </td>
+   <td>Gaming and Betting
+   </td>
+   <td>N/A
+   </td>
+  </tr>
+  <tr>
+   <td><strong>ITX</strong>
+   </td>
+   <td>ITX
+   </td>
+   <td>Income Tax
+   </td>
+   <td>N/A
+   </td>
+  </tr>
+  <tr>
+   <td><strong>RTX</strong>
+   </td>
+   <td>RTX
+   </td>
+   <td>Rental Tax
+   </td>
+   <td>N/A
+   </td>
+  </tr>
+</table>
+`}</HTMLBlock>
