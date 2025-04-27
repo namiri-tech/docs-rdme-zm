@@ -793,3 +793,76 @@ Below are the attributes used in the API requests and responses above.
   </tr>
 </table>
 `}</HTMLBlock>
+
+<br />
+
+## Tax Category Combinations
+
+Based on how ZRA has structured their API, certain tax combinations are designed to work together. Below is a breakdown of each tax combination we currently support
+
+<Table align={["left","left"]}>
+  <thead>
+    <tr>
+      <th>
+        Tax Category
+      </th>
+
+      <th>
+        Combined with
+      </th>
+    </tr>
+  </thead>
+
+  <tbody>
+    <tr>
+      <td>
+        VAT - A, B, C1, C2, C3 and D
+      </td>
+
+      <td>
+        Works with all tax categories
+      </td>
+    </tr>
+
+    <tr>
+      <td>
+        Tourism Levy (TL)
+      </td>
+
+      <td>
+        Any VAT Category
+      </td>
+    </tr>
+
+    <tr>
+      <td>
+        LED ( ECM and EXEEG)
+        Excise on Coal and Electricity
+      </td>
+
+      <td>
+        Any VAT Category
+      </td>
+    </tr>
+
+    <tr>
+      <td>
+        Insurance Premium Levy (IPL-1 and IPL-2)
+      </td>
+
+      <td>
+        Exempt (D) and Zero Rated (C3)
+      </td>
+    </tr>
+
+    <tr>
+      <td>
+        Turn Over Tax (TOT)
+      </td>
+
+      <td>
+        Exempt (D)
+      </td>
+    </tr>
+  </tbody>
+</Table>
