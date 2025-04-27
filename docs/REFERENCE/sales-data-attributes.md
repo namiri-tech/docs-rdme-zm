@@ -112,3 +112,85 @@ A debit note is an adjustment to an invoice already processed. This could be to 
 | 02   | Wrong invoice amount    |
 | 03   | Omitted item            |
 | 04   | Other \[specify]        |
+
+<br />
+
+## Types of Sales
+
+Currently, ZRA recognizes five types of sales: Normal Sale, Credit Note, Debit Note, LPO Sale, and Export Sale.\
+Below is a breakdown of the required fields for creating a Credit Note, Debit Note, LPO Sale, Export Sale, and a special type of Normal Sale known as an MTV(Minimum Tax Value) Sale.
+
+<Table align={["left","left"]}>
+  <thead>
+    <tr>
+      <th>
+        Type of Sale
+      </th>
+
+      <th>
+        Required Fields
+      </th>
+    </tr>
+  </thead>
+
+  <tbody>
+    <tr>
+      <td>
+        Credit Note
+      </td>
+
+      <td>
+        -Return Date
+        -Return Reason
+      </td>
+    </tr>
+
+    <tr>
+      <td>
+        Debit Note
+      </td>
+
+      <td>
+        -Debit Date
+        -Debit Reason
+      </td>
+    </tr>
+
+    <tr>
+      <td>
+        LPO Sale
+        (only available for customers
+        registered as LPO customers on both ZRA and Digitax)
+      </td>
+
+      <td>
+        -LPO number
+        -The item(s) used should be of VAT category C2 (Zero-rating Local Purchases Order transactions)
+      </td>
+    </tr>
+
+    <tr>
+      <td>
+        Export Sales
+      </td>
+
+      <td>
+        -Destination Country Code
+        -Payment Type
+        -Exchange Rate - if the sale was made using a
+        foreign currency
+        -The item(s) used should of VAT category C1 (Exports)
+      </td>
+    </tr>
+
+    <tr>
+      <td>
+        MTV sale
+      </td>
+
+      <td>
+        Should have an item created with a VAT category tax type B (Minimum Tax Value (MTV))
+      </td>
+    </tr>
+  </tbody>
+</Table>
