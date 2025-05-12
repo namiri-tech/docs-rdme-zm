@@ -8,8 +8,6 @@ metadata:
 ---
 ## POS Print on DigiTax Dashboard
 
-<br />
-
 These are the steps required to run POS Print on the Sales and Credit Note invoices:
 
 1. Download and install [QZ tray](https://qz.io/download/) (Version 2.1.2)
