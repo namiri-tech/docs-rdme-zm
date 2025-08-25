@@ -11,7 +11,11 @@ hidden: false
 
 <br />
 
-## Go back 🔙 OR Go to the [Home page](/)
+## Go back 🔙
+
+## OR
+
+## Go to the [Home page](/)
 
 <br />
 
