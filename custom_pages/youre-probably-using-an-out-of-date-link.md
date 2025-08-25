@@ -15,6 +15,8 @@ hidden: false
 
 <br />
 
-## Go back OR Go to the 
+<br />
 
-[Home page](/)
+<br />
+
+## Go back OR Go to the [Home page](/)
