@@ -1,10 +1,16 @@
 ---
-title: You're probably using an out-of-date link
+title: Page Not Found
 fullscreen: false
 hidden: false
 ---
-Go back
+<br />
 
-OR
+<br />
 
-Go to the [Home page](/)
+<br />
+
+<br />
+
+<Image align="center" alt="DigiTax logo" src="https://files.readme.io/bc2f0ccb877b63756436ce95909977bc68bc35d44c5c4b2b5aeb3a0deb7c23e4-DigiTax-Black.png" />
+
+Go back OR Go to the [Home page](/)
