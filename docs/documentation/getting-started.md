@@ -25,7 +25,7 @@ hidden: false
   </Card>
 </Cards>
 
-<Accordion title="DigiTax is multi-national. Explore other countries here ..." icon="fa-globe">
+<Accordion title="DigiTax is Pan African. Explore other countries here ..." icon="fa-globe">
   You are currently reading a guide in the DigiTax Zambia API Hub.
 
   If you're looking for another country or the general homepage for DigiTax API, navigate to the [DigiTax API homepage](https://docs.digitax.tech), or country-specific API hub pages (ordered alphabetically):
@@ -39,11 +39,11 @@ hidden: false
 
 African countries lately have been opting to digitize their tax systems by imposing e-Invoicing or Electronic Tax Invoicing and Reporting. Electronic Tax Invoicing is a nascent Fintech category in the Pan-African region.
 
-Zambia is one of the countries and the country's tax authority/ regulator, **ZRA** (Zambia Revenue Authority) has an e-invoicing system, named **ZRA Smart Invoice**. In this documentation, DigiTax Zambia API Hub, we shall simply refer to it as *ZRA Smart Invoice System*.
+Zambia is one of the countries and the country's tax authority/ regulator, **ZRA** (Zambia Revenue Authority) has an e-invoicing system, named **ZRA Smart Invoice**. In this documentation, DigiTax Zambia API Hub, we shall simply refer to it as _ZRA Smart Invoice System_.
 
 ## What is DigiTax?
 
-**DigiTax is a ZRA-licenced smart invoice solutions provider authorized to provide tax\
+**DigiTax is a ZRA-licenced smart invoice solutions provider authorized to provide tax
 compliance software**
 
 > **ZRA** stands for Zambia Revenue Authority
@@ -127,21 +127,21 @@ Here, at the DigiTax API hub, we cover guides, recipes and API reference to get 
 
 Our DigiTax Dashboard and DigiTax app use the **DigiTax API** in the background. The API is designed to optimize smart invoicing, tracking purchases and inventory management among other ZRA Smart Invoice functionalities in the following ways:
 
-* Asynchronous functionality that automatically retries ZRA Smart Invoice System (or any other tax agency system).\
+* Asynchronous functionality that automatically retries ZRA Smart Invoice System (or any other tax agency system).
   This mitigates against duplication of invoices and associated tax obligations
 * Guarantee that the same invoice won't be submitted more than once
 * Recording of purchases in addition to sales to ensure all ZRA Smart Invoice-related data is accessible in a single place
-* Throttling between your business' throughput and ZRA Smart Invoice System.\
+* Throttling between your business' throughput and ZRA Smart Invoice System.
   A business only needs to send an invoice once, and DigiTax will process the information thereafter based on ZRA Smart Invoice System capacity at that particular point in time
 * Real-time notifications
 * Priority support
-* Simple integration.\
+* Simple integration.
   We’ve streamlined integration, reducing the work required by 70%. To start with, you can interact with the API endpoints [here](/reference)
 * Code samples in 19 different integration programming languages to choose from when using the interactive API reference. This reduces the likelihood of errors during the development workflow
 * 99.99% uptime
 * Queuing and scaling (allowing us to support any amount of volume)
 * Get notifications on transaction statuses via [Callback URLs](doc:call-back-urls)
-* Intuitive DigiTax dashboard for you and your stakeholders\
+* Intuitive DigiTax dashboard for you and your stakeholders
   It serves for redundancy and e-invoicing
 
 ## Guaranteed safety and integrity
@@ -156,7 +156,7 @@ The DigiTax App and Dashboard users securely sign up and log in via social media
 
 > The dashboard is where you sign up and set up profiles and businesses outrightly as a product user or before integration.
 
-All activity is logged for audit trail and compliance checks and all information is encrypted and transmitted for\
+All activity is logged for audit trail and compliance checks and all information is encrypted and transmitted for
 maximum protection
 
 ### API
