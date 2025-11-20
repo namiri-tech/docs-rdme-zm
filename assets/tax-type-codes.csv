@@ -1,0 +1,19 @@
+TAX TYPE CODE ,TAX CATEGORY CODE ,TAX CATEGORY NAME        ,TAX RATE
+VAT           ,A   ,Standard Rated               ,16%
+VAT           ,B   ,Minimum Taxable Value (MTV)  ,MTV
+VAT           ,C1  ,Exports    ,0%
+VAT           ,C2  ,Zero-rating Local Purchases Order transactions ,0%
+VAT           ,C3  ,Zero-rated by nature         ,0%
+VAT           ,D   ,Exempt     ,No tax charge
+VAT           ,RVAT,Reverse VAT,16%
+VAT           ,E   ,Disbursement                 ,No tax charge
+IPL           ,IPL-1                 ,Insurance Premium Levy       ,5%
+IPL           ,IPL-2                 ,Re-insurance                 ,Exempt
+TL            ,TL  ,Tourism Levy                 ,1.50%
+TL            ,F   ,10% Statutory Service Charge ,No tax charge
+LED           ,ECM ,Excise on Coal               ,5%
+LED           ,EXEEG                 ,Excise Electricity           ,3%
+TOT           ,TOT ,Turnover Tax                 ,N/A
+GTX           ,GTX ,Gaming and Betting           ,N/A
+ITX           ,ITX ,Income Tax ,N/A
+RTX           ,RTX ,Rental Tax                   ,N/A
