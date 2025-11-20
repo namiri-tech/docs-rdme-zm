@@ -1,0 +1,6 @@
+Type of Sale,Required Fields
+Credit Note,-Return Date -Return Reason
+Debit Note,-Debit Date -Debit Reason
+LPO Sale (only available for customers registered as LPO customers on both ZRA and Digitax),-LPO number -The item(s) should belong to VAT category C2 (Zero-rated Local Purchase Order transactions).
+Export Sales,-Destination Country Code -Payment Type -Exchange Rate - if the sale was made using a foreign currency -The item(s) should belong to VAT category C1 (Exports)
+MTV sale,-The item(s) should belong to VAT category B (Minimum Tax Value (MTV))

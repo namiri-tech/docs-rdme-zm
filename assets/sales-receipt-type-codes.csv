@@ -1,0 +1,4 @@
+Code,Code Name,Code Description
+S,Sales,Sales
+R,Credit Note,Credit Note (after making a sale)
+D,Debit Note,Debit Note (after making a sale)
