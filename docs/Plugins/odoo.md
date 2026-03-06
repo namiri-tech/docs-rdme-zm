@@ -1,3 +1,8 @@
+---
+title: DigiTax Zambia Odoo Plugin
+hidden: true
+---
+
 # Odoo ZM plugin
 
 ## Prerequisites
