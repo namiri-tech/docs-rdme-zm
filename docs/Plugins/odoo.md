@@ -134,7 +134,7 @@ Next, navigate to the Invoicing page.
 
 ![Invoicing]
 
-Click New to create a new invoice.
+Click "New" to create a new invoice.
 
 ![New-Invoice]
 
