@@ -19,7 +19,9 @@ hidden: true
 
 ## Set up
 
-Install custom module on Odoo: DigiTax Smart Invoice Integration
+Install custom module on Odoo: DigiTax Smart Invoice Integration.
+
+> The plugin is also [available on Odoo Marketplace](https://apps.odoo.com/apps/modules/18.0/digitax_zambia).
 
 ![Odoo-custom-module]
 
