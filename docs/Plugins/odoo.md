@@ -58,13 +58,13 @@ From the DigiTax Zambia Odoo plugin page, you can:
 
 ![Test Connection]
 
-[Odoo-custom-module]: ../../docs-assets/install-zm-odoo-plugin.png
-[Settings]: ../../docs-assets/select-settings.png
-[Companies]: ../../docs-assets/select-companies.png
-[Select company]: ../../docs-assets/select-company.png
-[Company page]: ../../docs-assets/one-company.png
-[Plugin settings]: ../../docs-assets/plugin-settings.png
-[Test Connection]: ../../docs-assets/test-plugin-connection.png
+[Odoo-custom-module]: https://raw.githubusercontent.com/namiri-tech/docs-rdme-zm/refs/heads/v1.0/docs-assets/install-zm-odoo-plugin.png
+[Settings]: https://raw.githubusercontent.com/namiri-tech/docs-rdme-zm/refs/heads/v1.0/docs-assets/select-settings.png
+[Companies]: https://raw.githubusercontent.com/namiri-tech/docs-rdme-zm/refs/heads/v1.0/docs-assets/select-companies.png
+[Select company]: https://raw.githubusercontent.com/namiri-tech/docs-rdme-zm/refs/heads/v1.0/docs-assets/select-company.png
+[Company page]: https://raw.githubusercontent.com/namiri-tech/docs-rdme-zm/refs/heads/v1.0/docs-assets/one-company.png
+[Plugin settings]: https://raw.githubusercontent.com/namiri-tech/docs-rdme-zm/refs/heads/v1.0/docs-assets/plugin-settings.png
+[Test Connection]: https://raw.githubusercontent.com/namiri-tech/docs-rdme-zm/refs/heads/v1.0/docs-assets/test-plugin-connection.png
 
 ## Invoice
 
@@ -94,11 +94,11 @@ Navigate to the Digitax Zambia module of the item
 
 ![Product-DigiTax-Zambia]
 
-[Inventory]: ../../docs-assets/select-inventory.png
-[Products]: ../../docs-assets/select-products.png
-[Product]: ../../docs-assets/products.png
-[Product-Page]: ../../docs-assets/product.png
-[Product-DigiTax-Zambia]: ../../docs-assets/product-digitax.png
+[Inventory]: https://raw.githubusercontent.com/namiri-tech/docs-rdme-zm/refs/heads/v1.0/docs-assets/select-inventory.png
+[Products]: https://raw.githubusercontent.com/namiri-tech/docs-rdme-zm/refs/heads/v1.0/docs-assets/select-products.png
+[Product]: https://raw.githubusercontent.com/namiri-tech/docs-rdme-zm/refs/heads/v1.0/docs-assets/products.png
+[Product-Page]: https://raw.githubusercontent.com/namiri-tech/docs-rdme-zm/refs/heads/v1.0/docs-assets/product.png
+[Product-DigiTax-Zambia]: https://raw.githubusercontent.com/namiri-tech/docs-rdme-zm/refs/heads/v1.0/docs-assets/product-digitax.png
 
 ### Customers
 
@@ -122,11 +122,11 @@ Navigate to the Digitax Zambia module of the customer
 
 ![Customer-DigiTax-Zambia]
 
-[Invoicing]: ../../docs-assets/select-invoicing.png
-[Customers]: ../../docs-assets/select-customers.png
-[Customer]: ../../docs-assets/customers.png
-[Customer-Page]: ../../docs-assets/customer.png
-[Customer-DigiTax-Zambia]: ../../docs-assets/customer-digitax.png
+[Invoicing]: https://raw.githubusercontent.com/namiri-tech/docs-rdme-zm/refs/heads/v1.0/docs-assets/select-invoicing.png
+[Customers]: https://raw.githubusercontent.com/namiri-tech/docs-rdme-zm/refs/heads/v1.0/docs-assets/select-customers.png
+[Customer]: https://raw.githubusercontent.com/namiri-tech/docs-rdme-zm/refs/heads/v1.0/docs-assets/customers.png
+[Customer-Page]: https://raw.githubusercontent.com/namiri-tech/docs-rdme-zm/refs/heads/v1.0/docs-assets/customer.png
+[Customer-DigiTax-Zambia]: https://raw.githubusercontent.com/namiri-tech/docs-rdme-zm/refs/heads/v1.0/docs-assets/customer-digitax.png
 
 ### Invoicing
 
@@ -158,10 +158,10 @@ Click "Post to DigiTax" to send the invoice to DigiTax.
 
 ![Invoice Posted]
 
-[Invoicing]: ../../docs-assets/select-invoicing.png
-[New-Invoice]: ../../docs-assets/new-invoice.png
-[Add-Products]: ../../docs-assets/invoice-add-product.png
-[Attempt to confirm invoice without customer]: ../../docs-assets/invoice-customer-required.png
-[Add-Customer]: ../../docs-assets/invoice-add-customer.png
-[Invoice Confirmed]: ../../docs-assets/invoice-confirmed.png
-[Invoice Posted]: ../../docs-assets/invoice-posted.png
+[Invoicing]: https://raw.githubusercontent.com/namiri-tech/docs-rdme-zm/refs/heads/v1.0/docs-assets/select-invoicing.png
+[New-Invoice]: https://raw.githubusercontent.com/namiri-tech/docs-rdme-zm/refs/heads/v1.0/docs-assets/new-invoice.png
+[Add-Products]: https://raw.githubusercontent.com/namiri-tech/docs-rdme-zm/refs/heads/v1.0/docs-assets/invoice-add-product.png
+[Attempt to confirm invoice without customer]: https://raw.githubusercontent.com/namiri-tech/docs-rdme-zm/refs/heads/v1.0/docs-assets/invoice-customer-required.png
+[Add-Customer]: https://raw.githubusercontent.com/namiri-tech/docs-rdme-zm/refs/heads/v1.0/docs-assets/invoice-add-customer.png
+[Invoice Confirmed]: https://raw.githubusercontent.com/namiri-tech/docs-rdme-zm/refs/heads/v1.0/docs-assets/invoice-confirmed.png
+[Invoice Posted]: https://raw.githubusercontent.com/namiri-tech/docs-rdme-zm/refs/heads/v1.0/docs-assets/invoice-posted.png
