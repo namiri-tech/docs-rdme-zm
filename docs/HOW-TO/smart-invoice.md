@@ -7,7 +7,7 @@ metadata:
 ---
 We at Namiri Technologies, through our DigiTax Platform, have developed a suite of solutions:
 
-* **DigiTax POS** (Android) - Coming soon on Google Play Store
+* **DigiTax POS** (Android) - [Available on Google Play Store](https://play.google.com/store/apps/details?id=com.namiri.digitaxpos)
 * **DigiTax Dashboard** (Responsive Web Browser-based Desktop application for e-invoicing) and
 * **DigiTax API** (for system-to-system integration without the issue of platform hopping).
 
