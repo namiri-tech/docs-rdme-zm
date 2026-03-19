@@ -1,6 +1,7 @@
 ---
 title: MCP
-hidden: true
+excerpt: 'MCP: Model Context Protocol'
+hidden: false
 ---
 The DigiTax Zambia API Hub Model Context Protocol (MCP) server enables AI-powered code editors like Cursor and Windsurf, plus general-purpose tools like Claude Desktop, to interact directly with your DigiTax Zambia API Hub API and documentation.
 
