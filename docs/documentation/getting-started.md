@@ -32,6 +32,7 @@ hidden: false
 
   * <i class="icon-guides" /> [DigiTax Kenya API hub](https://ke.docs.digitax.tech)
   * <i class="icon-guides" /> [DigiTax Nigeria API hub](https://ng.docs.digitax.tech)
+  * <i class="icon-guides" /> [DigiTax Tanzania API hub](https://tz.docs.digitax.tech)
   * <i class="icon-guides" /> **DigiTax Zambia API hub (You are here 🎉)**
 </Accordion>
 
