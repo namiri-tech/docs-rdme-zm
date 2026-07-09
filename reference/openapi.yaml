@@ -1,9 +1,9 @@
 openapi: 3.0.1
 info:
-  title: DigiTax
-  description: DigiTax Public API
-  version: '2'
-  termsOfService: https://digitax.tech/page/terms
+  title: DigiTax Zambia API Endpoints
+  description: DigiTax Zambia Public API
+  version: '3'
+  termsOfService: https://docs.digitax.tech/page/terms
   contact:
     name: DigiTax
     url: https://digitax.tech
@@ -180,7 +180,7 @@ paths:
       - in: path
         name: item_id
         required: true
-        description: Item ID in Digitax
+        description: Item ID in DigiTax
         schema:
           type: string
           example: item_01HC3J1VVVM05YCTS61G7V3KC6
@@ -256,7 +256,7 @@ paths:
           required: true
           schema:
             type: string
-            description: Item ID in Digitax
+            description: Item ID in DigiTax
             example: item_01HC3J1VVVM05YCTS61G7V3KC6
       responses:
         '200':
@@ -491,7 +491,7 @@ paths:
           required: true
           schema:
             type: string
-            description: Import ID in Digitax
+            description: Import ID in DigiTax
             example: import_01HC3J1VVVM05YCTS61G7V3KC6
       requestBody:
         required: true
@@ -529,8 +529,8 @@ paths:
     put:
       tags:
         - Imports
-      summary: Link import item to an item in Digitax
-      description: Link import item to an item in Digitax
+      summary: Link import item to an item in DigiTax
+      description: Link import item to an item in DigiTax
       security:
         - apiKeyAuth: []
       parameters:
@@ -539,7 +539,7 @@ paths:
           required: true
           schema:
             type: string
-            description: Import ID in Digitax
+            description: Import ID in DigiTax
             example: import_01HC3J1VVVM05YCTS61G7V3KC6
       requestBody:
         required: true
@@ -552,12 +552,12 @@ paths:
               properties:
                 item_id:
                   type: string
-                  description: The id of the item in Digitax
+                  description: The id of the item in DigiTax
                   example: item_01HC3J1VVVM05YCTS61G7V3KC6
                 quantity:
                   type: number
                   description: >-
-                    The quantity of the item in Digitax to which the import item
+                    The quantity of the item in DigiTax to which the import item
                     is being linked. If 0, or not provided no stock will be
                     added for the item
                   example: 8
@@ -742,7 +742,7 @@ paths:
                 purchase_date:
                   type: string
                   format: date
-                  example: '2024-08-13'
+                  example: '2026-07-14'
                 supplier_tin:
                   type: string
                   example: '1234567890'
@@ -754,7 +754,7 @@ paths:
                   example: john@doe.com
                 supplier_phone:
                   type: string
-                  example: '+260712445689'
+                  example: '+260712345678'
                 supplier_id:
                   type: string
                   example: supplier_01J2CQMAZG1YCJ82YWQH6BHEKS
@@ -839,7 +839,7 @@ paths:
           required: true
           schema:
             type: string
-            description: Purchase ID in Digitax
+            description: Purchase ID in DigiTax
             example: purchase_01HC3J1VVVM05YCTS61G7V3KC6
       responses:
         '200':
@@ -896,7 +896,7 @@ paths:
                       quantity:
                         type: number
                         description: >-
-                          The quantity of the item in Digitax to which the
+                          The quantity of the item in DigiTax to which the
                           purchase item is being linked. If 0, no stock will be
                           added for the item
                         example: 10
@@ -989,7 +989,7 @@ paths:
                 sale_date:
                   type: string
                   format: date
-                  example: '2024-08-13'
+                  example: '2026-07-14'
                 currency_code:
                   type: string
                   example: ZMW
@@ -1045,6 +1045,7 @@ paths:
                       - item_id
                       - quantity
                       - unit_price
+                      - package_unit_quantity
                       - discount_rate
                       - discount_amount
                       - total_amount
@@ -1146,7 +1147,7 @@ paths:
                 return_date:
                   type: string
                   format: date
-                  example: '2024-08-13'
+                  example: '2026-07-14'
                 sale_id:
                   type: string
                   example: sale_01J55QCA52Q66R42AXNEA8PRYW
@@ -1170,6 +1171,7 @@ paths:
                       - item_id
                       - quantity
                       - unit_price
+                      - package_unit_quantity
                       - discount_rate
                       - discount_amount
                       - total_amount
@@ -1259,12 +1261,13 @@ paths:
               required:
                 - items
                 - debit_date
+                - debit_reason_code
                 - sale_id
                 - trader_invoice_number
               properties:
                 debit_date:
                   type: string
-                  example: '2024-08-13'
+                  example: '2026-07-14'
                   format: date
                 sale_id:
                   type: string
@@ -1289,6 +1292,7 @@ paths:
                       - item_id
                       - quantity
                       - unit_price
+                      - package_unit_quantity
                       - discount_rate
                       - discount_amount
                       - total_amount
@@ -1384,6 +1388,43 @@ paths:
             application/json:
               schema:
                 $ref: '#/components/schemas/Sale'
+        default:
+          description: Error response
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/Error'
+  /sales/{business_id}/{trader_invoice_number}:
+    get:
+      tags:
+        - Sales
+      x-visibility: internal
+      summary: Offline url for sales
+      description: >-
+        This endpoint allows you to generate a URL for offline sales and share
+        with clients to monitor sale status
+      parameters:
+        - in: path
+          name: business_id
+          required: true
+          schema:
+            type: string
+            description: Business ID on DigiTax
+            example: business_01HC3HTDAXQ50E07CWR2A2CFBD
+        - in: path
+          name: trader_invoice_number
+          required: true
+          schema:
+            type: string
+            description: Trader Invoice Number
+            example: 12345678901
+      responses:
+        '200':
+          description: Success
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/OfflineUrlSale'
         default:
           description: Error response
           content:
@@ -1498,6 +1539,10 @@ components:
           type: string
         code:
           type: string
+        metadata:
+          type: object
+          additionalProperties:
+            type: string
     FetchMeta:
       type: object
       required:
@@ -1505,7 +1550,7 @@ components:
       properties:
         last_updated:
           type: string
-          example: '2023-02-02T21:00:00.000Z'
+          example: '2026-07-14T21:00:00.000Z'
           description: Timestamp when the data was last updated from ZRA
     Notice:
       type: object
@@ -1522,8 +1567,8 @@ components:
           description: Notice number from ZRA
         notice_date:
           type: string
-          description: Notice date-time in IS0 8601 format
-          example: '2023-02-02T21:00:00.000Z'
+          description: Notice date-time in ISO 8601 format
+          example: '2026-07-14T21:00:00.000Z'
         title:
           type: string
           example: Call to Action
@@ -1607,7 +1652,7 @@ components:
           example: true
         is_live:
           type: boolean
-          description: Has the business been initialised successfully on Digitax?
+          description: Has the business been initialised successfully on DigiTax?
           example: true
     Customer:
       type: object
@@ -1672,10 +1717,11 @@ components:
           example: import_01HC3J1VVVM05YCTS61G7V3KC6
         task_code:
           type: string
-          example: '202302081365045'
+          example: '202607141365045'
         declaration_date:
           type: string
-          example: '2023-02-02T21:00:00.000Z'
+          description: Declaration date-time in ISO 8601 format
+          example: '2026-07-14T21:00:00.000Z'
           format: date-time
         item_sequence:
           type: integer
@@ -1775,7 +1821,7 @@ components:
       properties:
         id:
           type: string
-          description: Item ID in Digitax
+          description: Item ID in DigiTax
           example: item_01HC3J1VVVM05YCTS61G7V3KC6
         item_class_code:
           type: string
@@ -1886,6 +1932,7 @@ components:
         - item_list
         - sale_date
         - created_at
+        - sdc_id
       properties:
         id:
           type: string
@@ -1989,6 +2036,9 @@ components:
         receipt_signature:
           type: string
           example: 3JYZVPTPMYBGHG4A
+        sdc_id:
+          type: string
+          example: SDC1234567890
         receipt_url:
           type: string
           example: >-
@@ -2004,10 +2054,14 @@ components:
           example: completed
         sale_date:
           type: string
-          example: '2024-08-13'
+          description: The date of sale (YYYY-MM-DD)
+          example: '2026-07-14'
         created_at:
           type: string
-          example: '2024-12-02 12:51:32.491899+00'
+          description: >-
+            The date-time when the record was created (YYYY-MM-DD
+            HH:MM:SS.ffffff+TZ)
+          example: '2026-07-14 12:00:32.491899+00'
         cash_discount_rate:
           type: number
           description: Discount rate in decimal form i.e. 0.1 = 10%
@@ -2156,7 +2210,8 @@ components:
           example: '07'
         purchase_date:
           type: string
-          example: '20230620'
+          description: The purchase date (YYYYMMDD)
+          example: '20260714'
         purchase_number:
           type: string
           example: PUR24-234-565378-VFRDEF
@@ -2294,6 +2349,233 @@ components:
         composition_item_quantity:
           type: integer
           example: 30
+    OfflineUrlSale:
+      type: object
+      required:
+        - sale_date
+        - trader_invoice_number
+        - receipt_number
+        - id
+        - sdc_id
+        - internal_data
+        - receipt_signature
+        - receipt_url
+        - sales_tax_summary
+        - status
+        - total
+        - business_details
+        - customer_details
+        - items
+      properties:
+        id:
+          type: string
+          example: sale_01HC3HTDAXQ50E07CWR2A2CFBD
+        trader_invoice_number:
+          type: string
+          example: '12345678901'
+        original_sale_id:
+          type: string
+          example: sale_01HC3HTDAXQ50E07CWR2A2CFBD
+        receipt_type_code:
+          type: string
+          example: S
+        sale_number:
+          type: string
+          example: SAL24-234-565378-VFRDEF
+        kind:
+          type: string
+          enum:
+            - NORMAL
+            - LPO
+            - EXPORT
+          example: NORMAL
+        receipt_number:
+          type: integer
+          example: 38
+        lpo_number:
+          type: string
+        destination_country_code:
+          type: string
+          example: KE
+        reason_code:
+          type: string
+          example: '01'
+        currency_code:
+          type: string
+          example: ZMW
+        exchange_rate:
+          type: number
+          example: 123.45
+        sales_tax_summary:
+          type: object
+          required:
+            - taxable_amount_vat
+            - taxable_amount_ipl
+            - taxable_amount_tl
+            - taxable_amount_excise
+            - tax_amount_vat
+            - tax_amount_ipl
+            - tax_amount_tl
+            - tax_amount_excise
+            - taxable_amount_tot
+            - tax_amount_tot
+          properties:
+            taxable_amount_vat:
+              type: number
+              description: VAT taxable amount
+              example: 0
+            taxable_amount_ipl:
+              type: number
+              description: Insurance Premium Levy taxable amount
+              example: 517.24
+            taxable_amount_tl:
+              type: number
+              description: Tourism Levy taxable amount
+              example: 0
+            taxable_amount_excise:
+              type: number
+              description: Excise taxable amount
+              example: 0
+            taxable_amount_tot:
+              type: number
+              description: Turn Over Tax taxable amount
+              example: 0
+            tax_amount_vat:
+              type: number
+              description: VAT tax amount
+              example: 0
+            tax_amount_ipl:
+              type: number
+              description: Insurance Premium Levy tax amount
+              example: 517.24
+            tax_amount_tl:
+              type: number
+              description: Tourism Levy tax amount
+              example: 0
+            tax_amount_excise:
+              type: number
+              description: Excise tax amount
+              example: 0
+            tax_amount_tot:
+              type: number
+              description: Turn Over Tax tax amount
+              example: 0
+        internal_data:
+          type: string
+          example: PB3ZSZP3RZR3AUPYBYLUTFJDIA
+        receipt_signature:
+          type: string
+          example: 3JYZVPTPMYBGHG4A
+        sdc_id:
+          type: string
+          example: SDC1234567890
+        receipt_url:
+          type: string
+          example: >-
+            https://sandboxportal.zra.org.zm/common/link/ebm/receipt/indexEbmReceiptData?Data=2002720806000YXO7XG3HRQ7OOWDH
+          format: url
+        status:
+          type: string
+          enum:
+            - pending
+            - failed
+            - completed
+          description: status against ZRA
+          example: completed
+        sale_date:
+          type: string
+          description: The date of sale (YYYY-MM-DD)
+          example: '2026-07-14'
+        created_at:
+          type: string
+          description: >-
+            The date-time when the record was created (YYYY-MM-DD
+            HH:MM:SS.ffffff+TZ)
+          example: '2026-07-14 12:00:32.491899+00'
+        cash_discount_rate:
+          type: number
+          description: Discount rate in decimal form i.e. 0.1 = 10%
+          example: 0
+        cash_discount_amount:
+          type: number
+          description: Amount up to 4 decimal places
+          example: 0
+        total:
+          type: number
+          description: Total amount up to 4 decimal places
+          example: 1160
+        business_details:
+          type: object
+          required:
+            - name
+            - pin
+            - email
+            - phone
+            - location
+          properties:
+            name:
+              type: string
+              example: Business Name
+            pin:
+              type: string
+              example: P012345678P
+            email:
+              type: string
+              example: support@digitax.tech
+            phone:
+              type: string
+              example: 260712345678
+            location:
+              type: string
+              example: Lusaka
+        customer_details:
+          type: object
+          required:
+            - name
+            - pin
+            - email
+            - phone
+          properties:
+            name:
+              type: string
+              example: John Doe
+            pin:
+              type: string
+              example: P012345678P
+            email:
+              type: string
+              example: support@namiri.tech
+            phone:
+              type: string
+              example: 260712345678
+        items:
+          type: array
+          items:
+            type: object
+            required:
+              - id
+              - name
+              - price
+              - currency
+              - quantity
+            properties:
+              id:
+                type: string
+                example: item_01HC3J1VVVM05YCTS61G7V3KC6
+              name:
+                type: string
+                example: DigiTax Product 01
+              price:
+                type: number
+                example: 600
+              currency:
+                type: string
+                example: KES
+              quantity:
+                type: number
+                example: 1
+        logo_url:
+          type: string
   parameters:
     After:
       in: query
