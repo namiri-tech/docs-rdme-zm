@@ -76,13 +76,13 @@ There are several tax types:
 
 Systems concerning certain tax types have been introduced and have evolved over the years.
 
-The use of an Electronic Fiscal Device (EFD) was mandated by the EFD Law, which was passed through Act Number 17 of 2015. It has been mandatory for taxpayers registered for 2 of the taxes above (VAT and IPL) to procure, install and use an EFD.
+The use of an Electronic Fiscal Device (EFD) was mandated by the EFD Law, which was passed through Act Number 17 of 2015. It has been mandatory for taxpayers registered for 2 of the taxes above (VAT and IPL) to procure, install, and use an EFD.
 
 ### Smart Invoice
 
 More recently, ZRA launched Smart Invoice. Under the new provision, it is mandatory for a taxable supplier to use an electronic invoicing system to record each sale or transaction. Electronic Fiscal Devices have been phased out following the introduction of the electronic invoicing system (Smart Invoice).
 
-Moreover, the EFD implementation only covered Value Added Tax (VAT) and Insurance Premium Levy (IPL) while Smart Invoice will cover more types of taxes or levies such as:
+Moreover, the EFD implementation only covered Value Added Tax (VAT) and Insurance Premium Levy (IPL), while Smart Invoice will cover more types of taxes or levies, such as:
 
 - VAT
 - Turnover Tax
