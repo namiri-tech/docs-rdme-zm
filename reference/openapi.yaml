@@ -17,6 +17,9 @@ paths:
   /info:
     get:
       summary: Get ZRA information on the business
+      description: >-
+        Returns the branch and ZRA registration information for the
+        authenticated business.
       tags:
         - Businesses
       security:
@@ -39,7 +42,7 @@ paths:
       tags:
         - Items
       summary: Create an item
-      description: Create an item
+      description: Creates an item in the authenticated business's item catalogue.
       security:
         - apiKeyAuth: []
       requestBody:
@@ -60,73 +63,119 @@ paths:
               properties:
                 item_class_code:
                   type: string
-                  description: The item class code of the item
+                  description: >-
+                    The ZRA item classification code for the item. See the [Item
+                    Classification
+                    Table](https://zm.docs.digitax.tech/docs/items-item-classification-table)
+                    for sandbox and production codes.
                   example: '15000000'
                 item_type_code:
                   type: string
-                  description: The item type code of the item
+                  description: >-
+                    The item type code. See the [Item Type codes
+                    table](https://zm.docs.digitax.tech/docs/items-general-data-attributes#item-type-codes)
+                    for possible values.
                   example: '2'
                 item_name:
                   type: string
-                  description: The name of the item
+                  description: The name used to identify the item.
                   example: DigiTax Product 01
                 origin_nation_code:
                   type: string
-                  description: The country of origin code of the item
+                  description: >-
+                    The country code for the item's country of origin. See the
+                    [Country Codes
+                    table](https://zm.docs.digitax.tech/docs/items-general-data-attributes#country-codes)
+                    for possible values.
                   example: ZM
                 package_unit_code:
                   type: string
-                  description: The package unit code of the item
+                  description: >-
+                    The code for the unit used to package the item. See the
+                    [Packaging Unit Codes
+                    table](https://zm.docs.digitax.tech/docs/items-general-data-attributes#packaging-unit-codes).
                   example: CT
                 quantity_unit_code:
                   type: string
-                  description: The quantity unit code of the item
+                  description: >-
+                    The code for the unit used to measure the item's quantity.
+                    See the [Quantity Unit Codes
+                    table](https://zm.docs.digitax.tech/docs/items-general-data-attributes#quantity-unit-codes).
                   example: BX
                 vat_category_code:
                   type: string
-                  description: The VAT category code of the item
+                  description: >-
+                    The code for the item's VAT category. See the VAT entries in
+                    the [Taxation Type Codes
+                    table](https://zm.docs.digitax.tech/docs/items-general-data-attributes#taxation-type-codes).
                   example: A
                 ipl_category_code:
                   type: string
-                  description: The Insurance Premium Levy category code of the item
+                  description: >-
+                    The code for the item's Insurance Premium Levy category. Use
+                    IPL1 or IPL2 without hyphens; see the IPL entries in the
+                    [Taxation Type Codes
+                    table](https://zm.docs.digitax.tech/docs/items-general-data-attributes#taxation-type-codes)
+                    for their meanings. Cannot be combined with tl_category_code
+                    or excise_category_code, and requires a VAT category with a
+                    zero tax rate.
                   example: IPL1
                 tl_category_code:
                   type: string
-                  description: The Tourism Levy category code of the item
+                  description: >-
+                    The code for the item's Tourism Levy category. See the TL
+                    entry in the [Taxation Type Codes
+                    table](https://zm.docs.digitax.tech/docs/items-general-data-attributes#taxation-type-codes).
+                    Cannot be combined with ipl_category_code or
+                    excise_category_code.
                   example: TL
                 excise_category_code:
                   type: string
-                  description: The Excise duty category code of the item
+                  description: >-
+                    The code for the item's excise duty category. See the LED
+                    entries in the [Taxation Type Codes
+                    table](https://zm.docs.digitax.tech/docs/items-general-data-attributes#taxation-type-codes).
+                    Cannot be combined with ipl_category_code or
+                    tl_category_code.
                   example: EXEEG
                 tot_category_code:
                   type: string
-                  description: The turn over tax category code of the item
+                  description: >-
+                    The code for the item's turnover tax category. See the TOT
+                    entry in the [Taxation Type Codes
+                    table](https://zm.docs.digitax.tech/docs/items-general-data-attributes#taxation-type-codes).
                   example: TOT
                 default_unit_price:
                   type: number
-                  description: The default price of the item
+                  description: >-
+                    The default price per unit, at least 0.0001 and with up to
+                    four decimal places.
                   example: 1000
                 stock_quantity:
                   type: number
-                  description: Starting stock quantity
+                  description: The item's starting stock quantity.
                   example: 1000
                 insurable:
                   type: boolean
-                  description: Is the item insurable?
+                  description: Indicates whether the item is insurable.
                   example: false
                 callback_url:
                   type: string
                   description: >-
-                    The callback url to call when we have new information about
-                    the item, usually after syncing with ZRA
+                    URL where DigiTax sends an HTTP POST callback with event
+                    item.sync after the item successfully syncs with ZRA.
                   example: https://example.site/services/digitaxQueueReceiverPROXY
                 bar_code:
                   type: string
-                  description: The bar code or unique product code(UPC) of the item
+                  description: The item's barcode or universal product code (UPC).
                   example: '012345678905'
                 recommended_retail_price:
                   type: number
-                  description: Recommended Retailed Price as set by the manufacturer
+                  description: >-
+                    The retail price recommended by the manufacturer, in major
+                    currency units. Zero is allowed except when
+                    vat_category_code is B; a nonzero value must be at least
+                    0.0001 with up to four decimal places.
                   example: 1000
       responses:
         '201':
@@ -145,7 +194,9 @@ paths:
       tags:
         - Items
       summary: Get list of items owned by the business
-      description: Get list of items owned by the business
+      description: >-
+        Returns a paginated list of items in the authenticated business's item
+        catalogue.
       security:
         - apiKeyAuth: []
       parameters:
@@ -167,6 +218,7 @@ paths:
                     $ref: '#/components/schemas/Pagination'
                   data:
                     type: array
+                    description: The catalogue items in this page.
                     items:
                       $ref: '#/components/schemas/Item'
         default:
@@ -188,7 +240,9 @@ paths:
       tags:
         - Items
       summary: Update an item
-      description: Update an item
+      description: >-
+        Updates the supplied name or prices for the item identified by its
+        DigiTax ID.
       security:
         - apiKeyAuth: []
       requestBody:
@@ -200,14 +254,23 @@ paths:
               properties:
                 item_name:
                   type: string
+                  description: >-
+                    The updated name for the item. Omitted or empty values leave
+                    the current name unchanged.
                   example: Hello food
                 default_unit_price:
                   type: number
-                  description: The default price of the item up to 4 decimal places
+                  description: >-
+                    The updated default price per unit, with up to four decimal
+                    places. Omitted or zero values leave the current price
+                    unchanged.
                   example: 14
                 recommended_retail_price:
                   type: number
-                  description: Recommended Retailed Price as set by the manufacturer
+                  description: >-
+                    The updated retail price recommended by the manufacturer,
+                    with up to four decimal places. Omitted or zero values leave
+                    the current price unchanged.
                   example: 1000
       responses:
         '200':
@@ -226,7 +289,7 @@ paths:
       tags:
         - Items
       summary: Get a specific item
-      description: Get a specific item
+      description: Returns the item identified by its DigiTax ID.
       security:
         - apiKeyAuth: []
       responses:
@@ -247,7 +310,9 @@ paths:
       tags:
         - Items
       summary: Get item composition
-      description: Get item composition
+      description: >-
+        Returns the component items and quantities configured for the specified
+        item.
       security:
         - apiKeyAuth: []
       parameters:
@@ -278,7 +343,10 @@ paths:
       tags:
         - Items
       summary: Create item composition
-      description: Create item composition
+      description: >-
+        Adds component items and quantities that make up an existing item. At
+        least one supplied component must belong to the authenticated business,
+        and an item cannot be a component of itself.
       security:
         - apiKeyAuth: []
       requestBody:
@@ -290,9 +358,11 @@ paths:
               properties:
                 item_id:
                   type: string
+                  description: The DigiTax ID of the item whose composition is being set.
                   example: item_01HC3J1VVVM05YCTS61G7V3KC6
                 composition:
                   type: array
+                  description: The component items and their quantities.
                   items:
                     type: object
                     required:
@@ -301,9 +371,15 @@ paths:
                     properties:
                       composition_item_id:
                         type: string
+                        description: >-
+                          The DigiTax ID of a component item. It must not be the
+                          same as item_id.
                         example: item_01J47XGVT004DFVCVFYN50SRSF
                       quantity:
                         type: integer
+                        description: >-
+                          The quantity of this component item in the
+                          composition.
                         example: 30
       responses:
         '201':
@@ -325,7 +401,9 @@ paths:
       tags:
         - Customers
       summary: Get a list of business customers
-      description: Get a list of business customers
+      description: >-
+        Returns a paginated list of customers associated with the authenticated
+        business.
       security:
         - apiKeyAuth: []
       parameters:
@@ -347,6 +425,7 @@ paths:
                     $ref: '#/components/schemas/Pagination'
                   data:
                     type: array
+                    description: The customers in this page.
                     items:
                       $ref: '#/components/schemas/Customer'
         default:
@@ -359,7 +438,7 @@ paths:
       tags:
         - Customers
       summary: Save business customer
-      description: Save business customer
+      description: Creates a customer record for the authenticated business.
       security:
         - apiKeyAuth: []
       requestBody:
@@ -375,27 +454,34 @@ paths:
               properties:
                 customer_name:
                   type: string
-                  description: Customer Name
+                  description: The customer's name.
                   example: John Doe
                 customer_tin:
                   type: string
-                  description: Customer Tax Identification Number (TIN)
+                  description: >-
+                    The customer's Zambia Taxpayer Identification Number (TPIN),
+                    exactly 10 digits.
                   example: '1012345678'
                 email:
                   type: string
-                  description: Customer Email Address
+                  description: The customer's email address.
                   example: john@doe.com
                 is_lpo:
                   type: boolean
-                  description: Is this a LPO customer?
+                  description: >-
+                    Indicates whether this customer is associated with local
+                    purchase orders (LPOs).
                   example: false
                 phone:
                   type: string
-                  description: Customer Phone Number
-                  example: 260712345678
+                  description: >-
+                    The customer's phone number. Accepts a 10-digit local number
+                    beginning with 0, or its equivalent with a +260 or 260
+                    prefix. Spaces are removed before validation.
+                  example: '+260712345678'
                 address:
                   type: string
-                  description: Customer physical address
+                  description: The customer's physical address.
                   example: 5 Aluguntugui Road, Lusaka
       responses:
         '200':
@@ -415,7 +501,7 @@ paths:
       tags:
         - Customers
       summary: Get a business customer
-      description: Retrieves information about a customer given their ID on DigiTax
+      description: Retrieves information about a customer given their ID on DigiTax.
       security:
         - apiKeyAuth: []
       parameters:
@@ -444,7 +530,9 @@ paths:
       tags:
         - Imports
       summary: Get list of import items received from ZRA
-      description: Get list of import items received from ZRA
+      description: >-
+        Returns a paginated list of import items received from ZRA for the
+        authenticated business.
       security:
         - apiKeyAuth: []
       parameters:
@@ -469,6 +557,7 @@ paths:
                     $ref: '#/components/schemas/FetchMeta'
                   data:
                     type: array
+                    description: The import records in this page.
                     items:
                       $ref: '#/components/schemas/Import'
         default:
@@ -482,7 +571,9 @@ paths:
       tags:
         - Imports
       summary: Approve or reject an import item
-      description: Approve or reject an import item
+      description: >-
+        Approves or rejects the specified import item and records the supplied
+        remarks.
       security:
         - apiKeyAuth: []
       parameters:
@@ -504,13 +595,13 @@ paths:
               properties:
                 remarks:
                   type: string
-                  description: Text reason for the rejection or approval
+                  description: Remarks explaining the approval or rejection.
                   example: unrecognised import
                 reject:
                   type: boolean
                   description: >-
-                    Whether or not to reject the import item, if false it will
-                    be approved, and rejected if true
+                    Set to true to reject the import item or false to approve
+                    it.
                   example: false
       responses:
         '200':
@@ -530,7 +621,11 @@ paths:
       tags:
         - Imports
       summary: Link import item to an item in DigiTax
-      description: Link import item to an item in DigiTax
+      description: >-
+        Links a reviewed import to a DigiTax catalogue item. For an approved
+        import and a stock item, the supplied quantity is added to stock.
+        Rejected imports do not add stock. An already-linked import is returned
+        without adding stock again.
       security:
         - apiKeyAuth: []
       parameters:
@@ -552,14 +647,14 @@ paths:
               properties:
                 item_id:
                   type: string
-                  description: The id of the item in DigiTax
+                  description: The DigiTax ID of the item to link to the import item.
                   example: item_01HC3J1VVVM05YCTS61G7V3KC6
                 quantity:
                   type: number
                   description: >-
-                    The quantity of the item in DigiTax to which the import item
-                    is being linked. If 0, or not provided no stock will be
-                    added for the item
+                    The quantity to add to stock when linking an approved import
+                    to a stock item. If omitted or set to 0, no stock is added.
+                    Services do not add stock.
                   example: 8
       responses:
         '200':
@@ -579,7 +674,7 @@ paths:
       tags:
         - Suppliers
       summary: Get a list of business suppliers
-      description: Get a list of business suppliers
+      description: Returns a paginated list of suppliers for the authenticated business.
       security:
         - apiKeyAuth: []
       parameters:
@@ -601,6 +696,7 @@ paths:
                     $ref: '#/components/schemas/Pagination'
                   data:
                     type: array
+                    description: The suppliers in this page.
                     items:
                       $ref: '#/components/schemas/Supplier'
         default:
@@ -613,7 +709,7 @@ paths:
       tags:
         - Suppliers
       summary: Save business supplier
-      description: Save business supplier
+      description: Creates a supplier record for the authenticated business.
       security:
         - apiKeyAuth: []
       requestBody:
@@ -628,19 +724,21 @@ paths:
               properties:
                 supplier_name:
                   type: string
-                  description: Supplier Name
+                  description: The supplier's name.
                   example: Elite Books
                 supplier_tin:
                   type: string
-                  description: Supplier Tax Identification Number (TIN)
+                  description: >-
+                    The supplier's Zambia Taxpayer Identification Number (TPIN),
+                    exactly 10 digits.
                   example: '1012345678'
                 email:
                   type: string
-                  description: Supplier Email Address
+                  description: The supplier's email address.
                   example: elite@books.com
                 phone:
                   type: string
-                  description: Supplier Phone Number
+                  description: The supplier's phone number.
                   example: 260712345678
       responses:
         '200':
@@ -660,7 +758,7 @@ paths:
       tags:
         - Suppliers
       summary: Get a business supplier
-      description: Retrieves information about a supplier given their ID on DigiTax
+      description: Retrieves information about a supplier given their ID on DigiTax.
       security:
         - apiKeyAuth: []
       parameters:
@@ -689,7 +787,9 @@ paths:
       tags:
         - Purchases
       summary: List purchases
-      description: Get a list of purchases
+      description: >-
+        Returns a paginated list of purchases associated with the authenticated
+        business.
       security:
         - apiKeyAuth: []
       parameters:
@@ -714,6 +814,7 @@ paths:
                     $ref: '#/components/schemas/FetchMeta'
                   data:
                     type: array
+                    description: The purchases in this page.
                     items:
                       $ref: '#/components/schemas/Purchase'
         default:
@@ -726,7 +827,7 @@ paths:
       tags:
         - Purchases
       summary: Add manual purchase
-      description: Add manual purchase
+      description: Records a purchase and its line items for the authenticated business.
       security:
         - apiKeyAuth: []
       requestBody:
@@ -741,41 +842,59 @@ paths:
               properties:
                 purchase_date:
                   type: string
+                  description: >-
+                    The date the purchase was made, in YYYY-MM-DD format. Future
+                    dates are rejected.
                   format: date
                   example: '2026-07-14'
                 supplier_tin:
                   type: string
+                  description: >-
+                    The supplier's Zambia Taxpayer Identification Number (TPIN),
+                    exactly 10 digits when used.
                   example: '1234567890'
                 supplier_name:
                   type: string
+                  description: The supplier's name.
                   example: John Doe
                 supplier_email:
                   type: string
+                  description: The supplier's email address.
                   example: john@doe.com
                 supplier_phone:
                   type: string
+                  description: The supplier's phone number.
                   example: '+260712345678'
                 supplier_id:
                   type: string
+                  description: >-
+                    The DigiTax ID of an existing supplier. When supplied, this
+                    supplier is used instead of supplier_tin.
                   example: supplier_01J2CQMAZG1YCJ82YWQH6BHEKS
                 supplier_invoice_number:
                   type: integer
                   format: int32
                   description: >-
-                    Invoice number on the supplier's Certified Invoicing
-                    Solution (CIS), must be unique across all purchases
+                    The invoice number from the supplier's system. It must be
+                    unique for the same supplier within the business.
                   example: 340
                 payment_type_code:
                   type: string
+                  description: >-
+                    The payment method code. See the [Payment Type Codes
+                    table](https://zm.docs.digitax.tech/docs/sales-data-attributes#payment-type-codes)
+                    for codes 01 through 07; the API also supports 08 for bank
+                    transfer. Defaults to 01 when omitted or empty.
                   example: '07'
                 reject:
                   type: boolean
                   description: >-
-                    Whether to create the purchase with the approved or rejected
-                    status
+                    Set to true to record the purchase as rejected; otherwise it
+                    is recorded as approved.
                   example: false
                 items:
                   type: array
+                  description: The purchase line items.
                   items:
                     type: object
                     required:
@@ -788,29 +907,43 @@ paths:
                     properties:
                       item_id:
                         type: string
+                        description: The DigiTax ID of the item purchased.
                         example: item_01J55G02W1TY6YVFBMJHYKCENK
                       quantity:
                         type: number
+                        description: The quantity of the item purchased.
                         example: 1
                       unit_price:
                         type: number
-                        description: Amount up to 4 decimal places
+                        description: >-
+                          The price per item, at least 0.0001 and with up to
+                          four decimal places.
                         example: 1000
                       total_amount:
                         type: number
-                        description: Amount up to 4 decimal places
+                        description: >-
+                          The line total with at least 0.0001 with up to four
+                          decimal places. Must equal quantity times unit_price
+                          minus discount_amount, rounded to four decimal places.
                         example: 1000
                       package_unit_quantity:
                         type: number
+                        description: The number of packages represented by this line item.
                         example: 1
                       discount_rate:
                         type: number
-                        description: Discount rate in decimal form i.e. 0.1 = 10%,
+                        description: >-
+                          The line discount rate, from 0 to 1. For example, 0.1
+                          represents 10%.
                         maximum: 1
                         example: 0
                       discount_amount:
                         type: number
-                        description: Amount up to 4 decimal places
+                        description: >-
+                          The discount amount in major currency units. Zero is
+                          allowed; a nonzero value must be at least 0.0001 with
+                          up to four decimal places. It must not exceed
+                          total_amount.
                         example: 0
       responses:
         '201':
@@ -830,7 +963,7 @@ paths:
       tags:
         - Purchases
       summary: Get specific purchase
-      description: Get specific purchase
+      description: Returns the purchase identified by its DigiTax purchase ID.
       security:
         - apiKeyAuth: []
       parameters:
@@ -859,7 +992,11 @@ paths:
       tags:
         - Purchases
       summary: Link purchase item to item
-      description: Link purchase item to item
+      description: >-
+        Links line items from an approved purchase to DigiTax catalogue items
+        and adds the supplied quantities to stock for stock items.
+        Already-linked lines are skipped without adding stock again. Manual
+        purchases do not need linking.
       security:
         - apiKeyAuth: []
       parameters:
@@ -881,6 +1018,9 @@ paths:
               properties:
                 items:
                   type: array
+                  description: >-
+                    The purchase lines to link and the stock quantity to add for
+                    each.
                   items:
                     type: object
                     required:
@@ -889,16 +1029,20 @@ paths:
                     properties:
                       purchase_item_id:
                         type: string
+                        description: The DigiTax ID of the purchase line item to link.
                         example: purchaseitem_01HC3J1VVVM05YCTS61G7V3KC6
                       item_id:
                         type: string
+                        description: >-
+                          The DigiTax ID of the catalogue item to link to the
+                          purchase line.
                         example: item_01HC3J1VVVM05YCTS61G7V3KC6
                       quantity:
                         type: number
                         description: >-
-                          The quantity of the item in DigiTax to which the
-                          purchase item is being linked. If 0, no stock will be
-                          added for the item
+                          The quantity to add to stock when linking the purchase
+                          line to a catalogue item. If omitted or set to 0, no
+                          stock is added. Services do not add stock.
                         example: 10
       responses:
         '200':
@@ -918,7 +1062,9 @@ paths:
       tags:
         - Purchases
       summary: Approve or reject a purchase
-      description: Approve or reject a purchase
+      description: >-
+        Approves or rejects the specified purchase and records the supplied
+        comment.
       security:
         - apiKeyAuth: []
       parameters:
@@ -940,10 +1086,11 @@ paths:
               properties:
                 reject:
                   type: boolean
-                  description: Whether or not to reject the purchase
+                  description: Set to true to reject the purchase or false to approve it.
                   example: false
                 comment:
                   type: string
+                  description: Comment explaining the purchase review decision.
                   example: double entry
       responses:
         '200':
@@ -962,8 +1109,8 @@ paths:
     post:
       tags:
         - Sales
-      summary: Add sale
-      description: Add sale
+      summary: Create a sale
+      description: Creates a sale for the authenticated business.
       security:
         - apiKeyAuth: []
       requestBody:
@@ -985,60 +1132,116 @@ paths:
                     - NORMAL
                     - LPO
                     - EXPORT
+                  description: >-
+                    The sale type. Use LPO for a local purchase order sale or
+                    EXPORT for an export sale. See [Types of
+                    Sales](https://zm.docs.digitax.tech/docs/sales-data-attributes#types-of-sales)
+                    for an overview.
                   example: NORMAL
                 sale_date:
                   type: string
+                  description: >-
+                    The sale date in YYYY-MM-DD format. The service rejects
+                    dates earlier than 29 days before or later than 29 days
+                    after the current time in Africa/Lusaka.
                   format: date
                   example: '2026-07-14'
                 currency_code:
                   type: string
+                  description: >-
+                    The sale currency code. See the [Currency Code
+                    table](https://zm.docs.digitax.tech/docs/sales-data-attributes#currency-code)
+                    for supported currencies. For a currency other than ZMW,
+                    provide a positive exchange_rate.
                   example: ZMW
                 customer_tpin:
                   type: string
+                  description: >-
+                    The customer's Zambia Taxpayer Identification Number (TPIN),
+                    exactly 10 digits when used. For non-export sales without
+                    customer_id, this is used to find or create the customer.
+                    Ignored for export sales.
                   example: '1065478391'
                 customer_name:
                   type: string
+                  description: The customer's name.
                   example: John Doe
                 customer_phone:
                   type: string
+                  description: >-
+                    The customer's phone number. When customer_tpin is used to
+                    create a new customer, a supplied phone number must contain
+                    exactly 10 characters. Unlike the customer-creation
+                    endpoint, this endpoint does not normalize phone numbers.
                   example: '0651234567'
                 customer_id:
                   type: string
+                  description: >-
+                    The DigiTax ID of an existing customer. Required for LPO
+                    sales, where the customer must be registered as an LPO
+                    customer. For non-export sales, this customer is used
+                    instead of customer_tpin. Ignored for export sales.
                   example: customer_01J53RMNH66ADPH81DTV5MCZ3Y
                 trader_invoice_number:
                   type: string
                   description: >-
-                    Invoice number on the taxpayer's Certified Invoicing
-                    Solution (CIS), must be unique across all sale types
+                    The invoice reference from your system. It must be unique
+                    across sales, credit notes, and debit notes in the business,
+                    including failed transactions.
                   example: '12345678901'
                 exchange_rate:
                   type: number
-                  description: Required when creating a sale with a foreign currency
+                  description: >-
+                    The exchange rate to ZMW. Required and greater than zero
+                    when currency_code is not ZMW.
                   example: 123.45
                 destination_country_code:
                   type: string
-                  description: Required when creating an Export Sale
+                  description: >-
+                    The destination country code for an export sale. See the
+                    [Country Codes
+                    table](https://zm.docs.digitax.tech/docs/items-general-data-attributes#country-codes).
+                    It is required for EXPORT sales and must not be ZM.
                   example: KE
                 lpo_number:
                   type: string
-                  description: Required when creating an LPO Sale
+                  description: The local purchase order number. Required for LPO sales.
                   example: K37343645634534E
                 payment_type_code:
                   type: string
+                  description: >-
+                    The payment method code. See the [Payment Type Codes
+                    table](https://zm.docs.digitax.tech/docs/sales-data-attributes#payment-type-codes)
+                    for codes 01 through 07; the API also supports 08 for bank
+                    transfer. Defaults to 01 when omitted or empty.
                   example: '07'
                 callback_url:
                   type: string
+                  description: >-
+                    URL where DigiTax sends an HTTP POST callback with event
+                    sale.sync after the sale successfully syncs with ZRA. Failed
+                    syncs do not trigger this callback.
                   example: https://example.com/callback
                 cash_discount_rate:
                   type: number
-                  description: Discount rate in decimal form i.e. 0.1 = 10%
+                  description: >-
+                    The sale-level discount rate, from 0 to 1. For example, 0.1
+                    represents 10%. When both this rate and cash_discount_amount
+                    are nonzero, the amount must equal the sum of line totals
+                    times this rate.
                   example: 0
                 cash_discount_amount:
                   type: number
-                  description: Amount up to 4 decimal places
+                  description: >-
+                    The sale-level discount amount, in major currency units.
+                    When both this amount and cash_discount_rate are nonzero,
+                    they must agree. A nonzero sale-level discount rate or
+                    amount cannot be combined with a line that has both a
+                    nonzero discount_rate and discount_amount.
                   example: 0
                 items:
                   type: array
+                  description: The items included in the sale.
                   items:
                     type: object
                     required:
@@ -1052,29 +1255,51 @@ paths:
                     properties:
                       item_id:
                         type: string
+                        description: The DigiTax ID of the catalogue item being sold.
                         example: item_01J55G02W1TY6YVFBMJHYKCENK
                       quantity:
                         type: number
+                        description: >-
+                          The number of units being sold. For stock items, the
+                          quantity must not exceed the available stock.
                         example: 1
                       unit_price:
                         type: number
-                        description: Amount up to 4 decimal places
+                        description: >-
+                          The price per unit, in the sale currency, at least
+                          0.0001 with up to four decimal places.
                         example: 1000
                       total_amount:
                         type: number
-                        description: Amount up to 4 decimal places
+                        description: >-
+                          The line total in the sale currency, at least 0.0001
+                          with up to four decimal places. Must equal quantity
+                          times unit_price minus discount_amount, rounded to
+                          four decimal places. When discount_rate is nonzero, it
+                          must also equal that calculation without rounding.
                         example: 1000
                       package_unit_quantity:
                         type: number
+                        description: The number of packages represented by this line item.
                         example: 1
                       discount_rate:
                         type: number
-                        description: Discount rate in decimal form i.e. 0.1 = 10%,
+                        description: >-
+                          The line discount rate, from 0 to 1. For example, 0.1
+                          represents 10%. When both this rate and
+                          discount_amount are nonzero, discount_amount must
+                          equal quantity * unit_price * discount_rate, and
+                          discount_rate must equal discount_amount / (quantity *
+                          unit_price).
                         maximum: 1
                         example: 0
                       discount_amount:
                         type: number
-                        description: Amount up to 4 decimal places
+                        description: >-
+                          The line discount in the sale currency. Zero is
+                          allowed; a nonzero value must be at least 0.0001 with
+                          up to four decimal places. It must not exceed
+                          total_amount.
                         example: 0
       responses:
         '201':
@@ -1093,7 +1318,9 @@ paths:
       tags:
         - Sales
       summary: List normal sales
-      description: List normal sales
+      description: >-
+        Returns a paginated list of normal, LPO, and export sales for the
+        authenticated business. Credit and debit notes are listed separately.
       security:
         - apiKeyAuth: []
       parameters:
@@ -1115,6 +1342,7 @@ paths:
                     $ref: '#/components/schemas/Pagination'
                   data:
                     type: array
+                    description: The normal, LPO, and export sales in this page.
                     items:
                       $ref: '#/components/schemas/Sale'
         default:
@@ -1127,8 +1355,10 @@ paths:
     post:
       tags:
         - Sales
-      summary: Add credit note
-      description: Add credit note
+      summary: Create a credit note
+      description: >-
+        Creates a credit note for an existing sale using the supplied return
+        date, reason, and returned items.
       security:
         - apiKeyAuth: []
       requestBody:
@@ -1146,25 +1376,39 @@ paths:
               properties:
                 return_date:
                   type: string
+                  description: >-
+                    The date the goods or services were returned, in YYYY-MM-DD
+                    format. Future dates are rejected.
                   format: date
                   example: '2026-07-14'
                 sale_id:
                   type: string
+                  description: The DigiTax ID of the original sale to credit.
                   example: sale_01J55QCA52Q66R42AXNEA8PRYW
                 refund_reason_code:
                   type: string
+                  description: >-
+                    The refund reason code. See the [Refund Reason Code
+                    table](https://zm.docs.digitax.tech/docs/sales-data-attributes#refund-reason-code)
+                    for possible values.
                   example: '01'
                 trader_invoice_number:
                   type: string
                   description: >-
-                    Invoice number on the taxpayer's Certified Invoicing
-                    Solution (CIS), must be unique across all sale types
+                    The invoice reference from your system. It must be unique
+                    across sales, credit notes, and debit notes in the business,
+                    including failed transactions.
                   example: '12345678901'
                 callback_url:
                   type: string
+                  description: >-
+                    URL where DigiTax sends an HTTP POST callback with event
+                    sale.sync after the credit note successfully syncs with ZRA.
+                    Failed syncs do not trigger this callback.
                   example: https://example.com/callback
                 items:
                   type: array
+                  description: The original sale items being returned.
                   items:
                     type: object
                     required:
@@ -1178,24 +1422,44 @@ paths:
                     properties:
                       item_id:
                         type: string
+                        description: The DigiTax ID of the item being returned.
                         example: item_01J55G02W1TY6YVFBMJHYKCENK
                       quantity:
                         type: integer
+                        description: The quantity of the item being returned.
                         example: 1
                       unit_price:
                         type: number
+                        description: >-
+                          The price per unit in the original sale's currency, at
+                          least 0.0001 with up to four decimal places.
                         example: 1000
                       total_amount:
                         type: number
+                        description: >-
+                          The returned line total in the original sale's
+                          currency, at least 0.0001 with up to four decimal
+                          places.
                         example: 1000
                       package_unit_quantity:
                         type: number
+                        description: >-
+                          The number of packages represented by this returned
+                          line item.
                         example: 1
                       discount_rate:
                         type: number
+                        description: >-
+                          The discount rate for this returned line item, from 0
+                          to 1.
                         example: 0
                       discount_amount:
                         type: number
+                        description: >-
+                          The discount amount in the original sale's currency.
+                          Zero is allowed; a nonzero value must be at least
+                          0.0001 with up to four decimal places. It must not
+                          exceed total_amount.
                         example: 0
       responses:
         '201':
@@ -1214,7 +1478,7 @@ paths:
       tags:
         - Sales
       summary: List credit notes
-      description: List credit notes
+      description: Returns a paginated list of credit notes for the authenticated business.
       security:
         - apiKeyAuth: []
       parameters:
@@ -1236,6 +1500,7 @@ paths:
                     $ref: '#/components/schemas/Pagination'
                   data:
                     type: array
+                    description: The credit notes in this page.
                     items:
                       $ref: '#/components/schemas/Sale'
         default:
@@ -1248,8 +1513,10 @@ paths:
     post:
       tags:
         - Sales
-      summary: Add debit note
-      description: Add debit note
+      summary: Create a debit note
+      description: >-
+        Creates a debit note for an existing sale using the supplied debit date,
+        reason, and items.
       security:
         - apiKeyAuth: []
       requestBody:
@@ -1267,25 +1534,39 @@ paths:
               properties:
                 debit_date:
                   type: string
+                  description: >-
+                    The date of the debit note, in YYYY-MM-DD format. Future
+                    dates are rejected.
                   example: '2026-07-14'
                   format: date
                 sale_id:
                   type: string
+                  description: The DigiTax ID of the original sale to debit.
                   example: sale_01J55QCA52Q66R42AXNEA8PRYW
                 debit_reason_code:
                   type: string
+                  description: >-
+                    The debit note reason code. See the [Debit Reason Code
+                    table](https://zm.docs.digitax.tech/docs/sales-data-attributes#debit-reason-code)
+                    for possible values.
                   example: '01'
                 trader_invoice_number:
                   type: string
                   description: >-
-                    Invoice number on the taxpayer's Certified Invoicing
-                    Solution (CIS), must be unique across all sale types
+                    The invoice reference from your system. It must be unique
+                    across sales, credit notes, and debit notes in the business,
+                    including failed transactions.
                   example: '12345678901'
                 callback_url:
                   type: string
+                  description: >-
+                    URL where DigiTax sends an HTTP POST callback with event
+                    sale.sync after the debit note successfully syncs with ZRA.
+                    Failed syncs do not trigger this callback.
                   example: https://example.com/callback
                 items:
                   type: array
+                  description: The items included in the debit note.
                   items:
                     type: object
                     required:
@@ -1299,24 +1580,39 @@ paths:
                     properties:
                       item_id:
                         type: string
+                        description: The DigiTax ID of the item included in the debit note.
                         example: item_01J55G02W1TY6YVFBMJHYKCENK
                       unit_price:
                         type: number
+                        description: >-
+                          The price per unit in the original sale's currency, at
+                          least 0.0001 with up to four decimal places.
                         example: 1000
                       total_amount:
                         type: number
+                        description: >-
+                          The line total in the original sale's currency, at
+                          least 0.0001 with up to four decimal places.
                         example: 1000
                       quantity:
                         type: integer
+                        description: The quantity of the item included in the debit note.
                         example: 1
                       package_unit_quantity:
                         type: number
+                        description: The number of packages represented by this line item.
                         example: 1
                       discount_rate:
                         type: number
+                        description: The discount rate for this line item, from 0 to 1.
                         example: 0
                       discount_amount:
                         type: number
+                        description: >-
+                          The discount amount in the original sale's currency.
+                          Zero is allowed; a nonzero value must be at least
+                          0.0001 with up to four decimal places. It must not
+                          exceed total_amount.
                         example: 0
       responses:
         '201':
@@ -1335,7 +1631,7 @@ paths:
       tags:
         - Sales
       summary: List debit notes
-      description: List debit notes
+      description: Returns a paginated list of debit notes for the authenticated business.
       security:
         - apiKeyAuth: []
       parameters:
@@ -1357,6 +1653,7 @@ paths:
                     $ref: '#/components/schemas/Pagination'
                   data:
                     type: array
+                    description: The debit notes in this page.
                     items:
                       $ref: '#/components/schemas/Sale'
         default:
@@ -1370,7 +1667,9 @@ paths:
       tags:
         - Sales
       summary: Get sale (including credit note, debit note, lpo sale and export sale)
-      description: Get sale (including credit note, debit note, lpo sale and export sale)
+      description: >-
+        Returns a sale or related transaction, including credit notes, debit
+        notes, LPO sales, and export sales.
       security:
         - apiKeyAuth: []
       parameters:
@@ -1401,8 +1700,8 @@ paths:
       x-visibility: internal
       summary: Offline url for sales
       description: >-
-        This endpoint allows you to generate a URL for offline sales and share
-        with clients to monitor sale status
+        Returns sale and receipt details for the supplied business ID and
+        invoice reference, allowing clients to check the sale's status.
       parameters:
         - in: path
           name: business_id
@@ -1416,7 +1715,9 @@ paths:
           required: true
           schema:
             type: string
-            description: Trader Invoice Number
+            description: >-
+              The invoice reference from your system, unique within the business
+              identified by business_id.
             example: 12345678901
       responses:
         '200':
@@ -1436,7 +1737,9 @@ paths:
       tags:
         - Stock
       summary: Adjust item stock
-      description: Adjust item stock
+      description: >-
+        Adds to or deducts from an item's stock using the specified stock
+        movement type.
       security:
         - apiKeyAuth: []
       requestBody:
@@ -1453,22 +1756,27 @@ paths:
               properties:
                 item_id:
                   type: string
-                  description: Item ID in DigiTax
+                  description: The DigiTax ID of the item whose stock is being adjusted.
                   example: item_01HC3J1VVVM05YCTS61G7V3KC6
                 quantity:
                   type: number
-                  description: Stock quantity
+                  description: The quantity of stock to add or deduct.
                   example: 100
                 action:
                   type: string
                   enum:
                     - ADD
                     - DEDUCT
-                  description: Adjust type
+                  description: Whether to add stock or deduct stock.
                   example: ADD
                 movement_type:
                   type: string
-                  description: Stock movement type code
+                  description: >-
+                    The stock movement reason code, which must match action. Use
+                    an INCOMING code for ADD or an OUTGOING code for DEDUCT. See
+                    the [Stock Movement Type
+                    table](https://zm.docs.digitax.tech/docs/stock-data-attributes#stock-movement-type)
+                    for codes and meanings.
                   example: '01'
       responses:
         '200':
@@ -1484,12 +1792,18 @@ paths:
                 properties:
                   id:
                     type: string
+                    description: The DigiTax ID of the adjusted item.
                     example: item_01HC3J1VVVM05YCTS61G7V3KC6
                   item_code:
                     type: string
+                    description: >-
+                      The item's existing code, generated by DigiTax from the
+                      origin country, item type, package unit, quantity unit,
+                      and a counter padded to at least seven digits.
                     example: KE1PD-U230411121122
                   stock_quantity:
                     type: number
+                    description: The item's stock balance after the adjustment.
                     minimum: 0
                     example: 300
         default:
@@ -1501,6 +1815,7 @@ paths:
   /notices:
     get:
       summary: Get list of ZRA notices for business
+      description: Returns ZRA notices available to the authenticated business.
       tags:
         - Notices
       security:
@@ -1524,23 +1839,31 @@ components:
   schemas:
     Success:
       type: object
+      description: Indicates that the requested operation succeeded.
       required:
         - message
       properties:
         message:
           type: string
+          description: A message confirming that the operation succeeded.
     Error:
       type: object
+      description: Describes a rejected request or processing error.
       required:
         - message
         - code
       properties:
         message:
           type: string
+          description: A message explaining the error.
+          example: not a valid currency code
         code:
           type: string
+          description: The HTTP status code represented as a string.
+          example: '400'
         metadata:
           type: object
+          description: Additional error details, when available.
           additionalProperties:
             type: string
     FetchMeta:
@@ -1551,7 +1874,7 @@ components:
         last_updated:
           type: string
           example: '2026-07-14T21:00:00.000Z'
-          description: Timestamp when the data was last updated from ZRA
+          description: The timestamp when this data was last updated from ZRA.
     Notice:
       type: object
       required:
@@ -1564,23 +1887,26 @@ components:
         notice_number:
           type: string
           example: 3
-          description: Notice number from ZRA
+          description: The notice number assigned by ZRA.
         notice_date:
           type: string
-          description: Notice date-time in ISO 8601 format
+          description: The date and time when ZRA issued the notice, in ISO 8601 format.
           example: '2026-07-14T21:00:00.000Z'
         title:
           type: string
+          description: The notice title.
           example: Call to Action
         content:
           type: string
+          description: The notice text.
           example: Call to Action
         by:
           type: string
+          description: The organization that issued the notice.
           example: ZAMBIA REVENUE AUTHORITY
         detail_url:
           type: string
-          example: https://hello.zra.go.ke
+          description: URL for additional information about the notice.
     Branch:
       type: object
       required:
@@ -1592,67 +1918,66 @@ components:
       properties:
         id:
           type: string
+          description: The DigiTax ID of the branch.
           example: branch_01HC3J1VVVM05YCTS61G7V3KC6
         tax_pin:
           type: string
-          description: Branch ZRA PIN
+          description: The Zambia TPIN registered for the branch.
           example: 1012345678
         branch_office_id:
           type: string
-          description: Branch Office ID
+          description: The branch identifier assigned by ZRA.
           example: '000'
         branch_office_name:
           type: string
-          description: Branch Office Name
+          description: The branch name registered with ZRA.
           example: Head Office
         branch_status_code:
           type: string
           enum:
             - '01'
             - '02'
-          description: Branch Status Code
+          description: The branch status code returned by ZRA.
           example: '01'
         province_name:
           type: string
-          description: Province Name
+          description: The province where the branch is located.
           example: LUSAKA
         sub_county_name:
           type: string
-          description: Sub County Name
+          description: The sub-county where the branch is located.
           example: Lusaka
         sector_name:
           type: string
-          description: Sector Name
+          description: The sector where the branch is located.
           example: CBD
         location_description:
           type: string
-          description: Location Description
+          description: A description of the branch's location.
           example: 1st Floor
         manager_name:
           type: string
-          description: Manager Name
+          description: The branch manager's name.
           example: John Doe
         manager_contact:
           type: string
-          description: Manager Contact
+          description: The branch manager's contact number.
           example: '712345678'
         manager_email:
           type: string
-          description: Manager Email
+          description: The branch manager's email address.
           example: manager@email.com
         is_head_office:
           type: boolean
-          description: Is Head Office
+          description: Indicates whether this branch is the business's head office.
           example: true
         is_test:
           type: boolean
-          description: >-
-            Is this a test business? Test businesses can only be used within the
-            sanbox environment
+          description: Indicates whether the business is configured as a test business.
           example: true
         is_live:
           type: boolean
-          description: Has the business been initialised successfully on DigiTax?
+          description: Whether the business is marked as live in DigiTax.
           example: true
     Customer:
       type: object
@@ -1662,15 +1987,15 @@ components:
       properties:
         id:
           type: string
-          description: Customer ID
+          description: The DigiTax ID of the customer.
           example: customer_01HC3HTDAXQ50E07CWR2A2CFBD
         customer_name:
           type: string
-          description: Customer Name
+          description: The customer's name.
           example: John Doe
         email:
           type: string
-          description: Customer Email
+          description: The customer's email address.
           example: john@doe.com
         is_lpo:
           type: boolean
@@ -1678,15 +2003,15 @@ components:
           example: false
         phone:
           type: string
-          description: Customer Phone Number
+          description: The customer's phone number.
           example: '+260712345678'
         customer_tpin:
           type: string
-          description: Customer Tax Identification Number (TIN)
+          description: The customer's Zambia Taxpayer Identification Number (TPIN).
           example: '8754637189'
         address:
           type: string
-          description: Customer physical address
+          description: The customer's physical address.
           example: 5 Aluguntugui Road, Lusaka
     Import:
       type: object
@@ -1714,9 +2039,11 @@ components:
       properties:
         id:
           type: string
+          description: The DigiTax ID of the imported item.
           example: import_01HC3J1VVVM05YCTS61G7V3KC6
         task_code:
           type: string
+          description: The ZRA task code associated with the import record.
           example: '202607141365045'
         declaration_date:
           type: string
@@ -1725,57 +2052,92 @@ components:
           format: date-time
         item_sequence:
           type: integer
+          description: The item's sequence number within the import declaration.
           example: 1
         declaration_number:
           type: string
+          description: The import declaration number.
           example: 23BUSIM400040606
         hs_code:
           type: string
+          description: The Harmonized System code identifying the imported product.
           example: '30049000'
         item_name:
           type: string
+          description: The item name recorded in the import declaration.
           example: MEDICAMENT; NORMAL SALINE 0.9% I.V. [ NS ]; CT; 1450; 500ML;
         origin_nation_code:
           type: string
+          description: >-
+            The country code for the item's country of origin. See the [Country
+            Codes
+            table](https://zm.docs.digitax.tech/docs/items-general-data-attributes#country-codes)
+            for possible values.
           example: UG
         import_item_status_code:
           type: string
+          description: >-
+            The status code assigned to the import item by ZRA. See the [Import
+            Item Status
+            table](https://zm.docs.digitax.tech/docs/import-data-attributes#import-item-status).
+            This is separate from the DigiTax synchronization status field.
           example: '2'
         export_nation_code:
           type: string
+          description: >-
+            The country code for the country exporting the item. See the
+            [Country Codes
+            table](https://zm.docs.digitax.tech/docs/items-general-data-attributes#country-codes).
           example: UG
         package:
           type: integer
+          description: The number of packages recorded for the import item.
           example: 17
         package_unit_code:
           type: string
+          description: >-
+            The code for the unit used to package the import item. See the
+            [Packaging Unit Codes
+            table](https://zm.docs.digitax.tech/docs/items-general-data-attributes#packaging-unit-codes).
           example: KGM
         quantity:
           type: integer
+          description: The imported item quantity.
           example: 23925
         quantity_unit_code:
           type: string
+          description: >-
+            The code for the unit used to measure the imported quantity. See the
+            [Quantity Unit Codes
+            table](https://zm.docs.digitax.tech/docs/items-general-data-attributes#quantity-unit-codes).
           example: KGM
         gross_weight:
           type: integer
+          description: The gross weight recorded for the imported item.
           example: 24650
         net_weight:
           type: integer
+          description: The net weight recorded for the imported item.
           example: 23925
         supplier_name:
           type: string
+          description: The supplier named in the import declaration.
           example: ABACUS PARENTERAL DRUGS LIMITED
         agent_name:
           type: string
+          description: The agent named in the import declaration.
           example: Kandito International Company Kenya Limited
         invoice_foreign_currency_amount:
           type: number
+          description: The invoice amount in the foreign currency.
           example: 14355
         invoice_foreign_currency_code:
           type: string
+          description: The currency code for the foreign-currency invoice amount.
           example: USD
         invoice_foreign_currency_rate:
           type: number
+          description: The exchange rate recorded for the foreign-currency invoice.
           example: 124.45
         status:
           type: string
@@ -1783,25 +2145,38 @@ components:
             - PENDING
             - FAILED
             - COMPLETED
-          description: item status against ZRA VSDC
+          description: The synchronization status of the imported item with ZRA's VSDC.
           example: COMPLETED
         item_id:
           type: string
+          description: The DigiTax ID of an item linked to this import record.
           example: item_01HC3J1VVVM05YCTS61G7V3KC6
         item_class_code:
           type: string
+          description: >-
+            The classification code of the linked item. See the [Item
+            Classification
+            Table](https://zm.docs.digitax.tech/docs/items-item-classification-table)
+            for sandbox and production codes.
           example: '30103604'
         item_code:
           type: string
+          description: >-
+            The DigiTax-generated code of the linked catalogue item. It combines
+            the origin country, item type, package unit, quantity unit, and a
+            counter padded to at least seven digits.
           example: KE2CRM0000015
         remarks:
           type: string
+          description: Remarks recorded during review of the import item.
           example: unknown item
         approved_quantity:
           type: number
+          description: The quantity supplied when linking the import to a catalogue item.
           example: 12
     Item:
       type: object
+      description: An item in the authenticated business's DigiTax catalogue.
       required:
         - id
         - item_class_code
@@ -1821,15 +2196,22 @@ components:
       properties:
         id:
           type: string
-          description: Item ID in DigiTax
+          description: The DigiTax ID of the item.
           example: item_01HC3J1VVVM05YCTS61G7V3KC6
         item_class_code:
           type: string
-          description: The item class code of the item
+          description: >-
+            The ZRA classification code assigned to the item. See the [Item
+            Classification
+            Table](https://zm.docs.digitax.tech/docs/items-item-classification-table)
+            for sandbox and production codes.
           example: 99020000
         item_type_code:
           type: string
-          description: The item type code of the item
+          description: >-
+            The item type code. See the [Item Type codes
+            table](https://zm.docs.digitax.tech/docs/items-general-data-attributes#item-type-codes)
+            for possible values.
           example: 3
         item_name:
           type: string
@@ -1841,51 +2223,81 @@ components:
           example: IT24-234-565378-VFRDEF
         origin_nation_code:
           type: string
-          description: The country of origin code of the item
+          description: >-
+            The country code for the item's country of origin. See the [Country
+            Codes
+            table](https://zm.docs.digitax.tech/docs/items-general-data-attributes#country-codes)
+            for possible values.
           example: KE
         package_unit_code:
           type: string
-          description: The package unit code of the item
+          description: >-
+            The package unit code of the item. See the [Packaging Unit Codes
+            table](https://zm.docs.digitax.tech/docs/items-general-data-attributes#packaging-unit-codes).
           example: NT
         quantity_unit_code:
           type: string
-          description: The quantity unit code of the item
+          description: >-
+            The code for the unit used to measure the item's quantity. See the
+            [Quantity Unit Codes
+            table](https://zm.docs.digitax.tech/docs/items-general-data-attributes#quantity-unit-codes).
           example: U
         vat_category_code:
           type: string
-          description: The VAT category code of the item
+          description: >-
+            The VAT category code of the item. See the VAT entries in the
+            [Taxation Type Codes
+            table](https://zm.docs.digitax.tech/docs/items-general-data-attributes#taxation-type-codes).
           example: D
         ipl_category_code:
           type: string
-          description: The Insurance Premium Levy category code of the item
+          description: >-
+            The Insurance Premium Levy category code of the item, IPL1 or IPL2
+            without hyphens. See the IPL entries in the [Taxation Type Codes
+            table](https://zm.docs.digitax.tech/docs/items-general-data-attributes#taxation-type-codes)
+            for their meanings.
           example: IPL1
         tl_category_code:
           type: string
-          description: The Tourism Levy category code of the item
+          description: >-
+            The Tourism Levy category code of the item. See the TL entry in the
+            [Taxation Type Codes
+            table](https://zm.docs.digitax.tech/docs/items-general-data-attributes#taxation-type-codes).
           example: TL
         excise_category_code:
           type: string
-          description: The Excise duty category code of the item
+          description: >-
+            The excise duty category code of the item. See the LED entries in
+            the [Taxation Type Codes
+            table](https://zm.docs.digitax.tech/docs/items-general-data-attributes#taxation-type-codes).
           example: EXEEG
         tot_category_code:
           type: string
-          description: The turn over tax category code of the item
+          description: >-
+            The turnover tax category code of the item. See the TOT entry in the
+            [Taxation Type Codes
+            table](https://zm.docs.digitax.tech/docs/items-general-data-attributes#taxation-type-codes).
           example: TOT
         default_unit_price:
           type: number
-          description: The default price of the item up to 4 decimal places
+          description: The default unit price for the item, with up to four decimal places.
           example: 14
         item_code:
           type: string
-          description: The assigned item code of the item
+          description: >-
+            The item's code, generated by DigiTax from the origin country, item
+            type, package unit, quantity unit, and a counter padded to at least
+            seven digits.
           example: ZM2BGBG0000004
         is_stock_item:
           type: boolean
-          description: Indicates whether the item is a stock item or not.
+          description: >-
+            Whether DigiTax tracks stock movements for the item. Raw materials
+            and finished products are stock items; services are not.
           example: true
         stock_quantity:
           type: number
-          description: The available stock balance
+          description: The item's current stock balance.
           minimum: 0
           example: 1000
         active:
@@ -1898,7 +2310,7 @@ components:
             - PENDING
             - FAILED
             - COMPLETED
-          description: item status against ZRA VSDC
+          description: The item's synchronization status with ZRA's VSDC.
           example: COMPLETED
         bar_code:
           type: string
@@ -1906,22 +2318,33 @@ components:
           example: '012345678905'
         recommended_retail_price:
           type: number
-          description: Recommended Retailed Price as set by the manufacturer
+          description: >-
+            The retail price recommended by the manufacturer, with up to four
+            decimal places.
           example: 1000
     Pagination:
       type: object
+      description: Cursor information for a paginated response.
       properties:
         next:
           type: string
+          description: >-
+            Cursor to use in the after parameter to retrieve the next page, when
+            available.
           example: <entity>_01HC3J1VVVM05YCTS61G7V3KC6
         previous:
           type: string
+          description: >-
+            Cursor to use in the before parameter to retrieve the previous page,
+            when available.
           example: <entity>_01HC3J1VVVM05YCTS61G7V3KC6
         page_size:
           type: integer
+          description: The number of records in this page.
           example: 20
     Sale:
       type: object
+      description: A sale transaction recorded for the business.
       required:
         - id
         - sales_tax_summary
@@ -1936,18 +2359,31 @@ components:
       properties:
         id:
           type: string
+          description: The DigiTax ID of the sale.
           example: sale_01HC3HTDAXQ50E07CWR2A2CFBD
         trader_invoice_number:
           type: string
+          description: >-
+            The invoice reference from your system. It must be unique across
+            sales, credit notes, and debit notes in the business, including
+            failed transactions.
           example: '12345678901'
         original_sale_id:
           type: string
+          description: >-
+            The DigiTax ID of the original sale, when this is a credit or debit
+            note.
           example: sale_01HC3HTDAXQ50E07CWR2A2CFBD
         receipt_type_code:
           type: string
+          description: >-
+            The ZRA receipt type code. See the [Receipt Type Codes
+            table](https://zm.docs.digitax.tech/docs/sales-data-attributes#receipt-type-codes)
+            for sale, credit-note, and debit-note codes.
           example: S
         sale_number:
           type: string
+          description: The sale number assigned to the transaction.
           example: SAL24-234-565378-VFRDEF
         kind:
           type: string
@@ -1955,26 +2391,48 @@ components:
             - NORMAL
             - LPO
             - EXPORT
+          description: >-
+            The sale type. See [Types of
+            Sales](https://zm.docs.digitax.tech/docs/sales-data-attributes#types-of-sales)
+            for an overview.
           example: NORMAL
         receipt_number:
           type: integer
+          description: The receipt number assigned by ZRA, when available.
           example: 38
         lpo_number:
           type: string
+          description: The local purchase order number for an LPO sale.
         destination_country_code:
           type: string
+          description: >-
+            The destination country code for an export sale. See the [Country
+            Codes
+            table](https://zm.docs.digitax.tech/docs/items-general-data-attributes#country-codes).
           example: KE
         reason_code:
           type: string
+          description: >-
+            The reason code for the credit or debit note. See the [Refund Reason
+            Code
+            table](https://zm.docs.digitax.tech/docs/sales-data-attributes#refund-reason-code)
+            for credit notes or the [Debit Reason Code
+            table](https://zm.docs.digitax.tech/docs/sales-data-attributes#debit-reason-code)
+            for debit notes.
           example: '01'
         currency_code:
           type: string
+          description: >-
+            The currency code used for the transaction. See the [Currency Code
+            table](https://zm.docs.digitax.tech/docs/sales-data-attributes#currency-code).
           example: ZMW
         exchange_rate:
           type: number
+          description: The exchange rate for a sale made in a currency other than ZMW.
           example: 123.45
         sales_tax_summary:
           type: object
+          description: Taxable and tax amounts summed across the sale's line items.
           required:
             - taxable_amount_vat
             - taxable_amount_ipl
@@ -1989,58 +2447,65 @@ components:
           properties:
             taxable_amount_vat:
               type: number
-              description: VAT taxable amount
+              description: Total amount subject to VAT.
               example: 0
             taxable_amount_ipl:
               type: number
-              description: Insurance Premium Levy taxable amount
+              description: Total amount subject to Insurance Premium Levy.
               example: 517.24
             taxable_amount_tl:
               type: number
-              description: Tourism Levy taxable amount
+              description: Total amount subject to Tourism Levy.
               example: 0
             taxable_amount_excise:
               type: number
-              description: Excise taxable amount
+              description: Total amount subject to excise duty.
               example: 0
             taxable_amount_tot:
               type: number
-              description: Turn Over Tax taxable amount
+              description: Total amount subject to turnover tax.
               example: 0
             tax_amount_vat:
               type: number
-              description: VAT tax amount
+              description: Total VAT charged.
               example: 0
             tax_amount_ipl:
               type: number
-              description: Insurance Premium Levy tax amount
+              description: Total Insurance Premium Levy charged.
               example: 517.24
             tax_amount_tl:
               type: number
-              description: Tourism Levy tax amount
+              description: Total Tourism Levy charged.
               example: 0
             tax_amount_excise:
               type: number
-              description: Excise tax amount
+              description: Total excise duty charged.
               example: 0
             tax_amount_tot:
               type: number
-              description: Turn Over Tax tax amount
+              description: Total turnover tax charged.
               example: 0
         customer_id:
           type: string
+          description: The DigiTax ID of the customer associated with the sale.
           example: customer_01HC3HTDAXQ50E07CWR2A2CFBD
         internal_data:
           type: string
+          description: Internal data returned by ZRA for the transaction.
           example: PB3ZSZP3RZR3AUPYBYLUTFJDIA
         receipt_signature:
           type: string
+          description: The receipt signature returned by ZRA.
           example: 3JYZVPTPMYBGHG4A
         sdc_id:
           type: string
+          description: >-
+            The identifier of the sales data controller (SDC) that processed the
+            transaction.
           example: SDC1234567890
         receipt_url:
           type: string
+          description: URL for the ZRA receipt.
           example: >-
             https://sandboxportal.zra.org.zm/common/link/ebm/receipt/indexEbmReceiptData?Data=2002720806000YXO7XG3HRQ7OOWDH
           format: url
@@ -2050,11 +2515,11 @@ components:
             - pending
             - failed
             - completed
-          description: status against ZRA
+          description: The transaction's synchronization status with ZRA.
           example: completed
         sale_date:
           type: string
-          description: The date of sale (YYYY-MM-DD)
+          description: The date of the sale in YYYY-MM-DD format.
           example: '2026-07-14'
         created_at:
           type: string
@@ -2064,18 +2529,24 @@ components:
           example: '2026-07-14 12:00:32.491899+00'
         cash_discount_rate:
           type: number
-          description: Discount rate in decimal form i.e. 0.1 = 10%
+          description: >-
+            The sale-level discount rate as a decimal; for example, 0.1
+            represents 10%.
           example: 0
         cash_discount_amount:
           type: number
-          description: Amount up to 4 decimal places
+          description: The sale-level discount amount, with up to four decimal places.
           example: 0
         item_list:
           type: array
+          description: >-
+            The products or services included in the transaction, with their
+            quantities, prices, discounts, and taxes.
           items:
             $ref: '#/components/schemas/SaleItem'
     SaleItem:
       type: object
+      description: A line item included in a sale.
       required:
         - id
         - quantity
@@ -2090,99 +2561,126 @@ components:
       properties:
         id:
           type: string
-          example: purchaseitem_01HC3J1VVVM05YCTS61G7V3KC6
+          description: The DigiTax ID of this sale line item.
+          example: saleitem_01HC3J1VVVM05YCTS61G7V3KC6
         quantity:
           type: number
+          description: The number of units in the sale line item.
           example: 10
         total_amount:
           type: number
-          description: Amount up to 4 decimal places
+          description: The total amount for the line item,  with up to four decimal places.
           example: 1160
         vat_tax_amount:
           type: number
-          description: Amount up to 4 decimal places
+          description: The VAT charged on the line item, with up to four decimal places.
           example: 160
         vat_taxable_amount:
           type: number
-          description: Amount up to 4 decimal places
+          description: The line item amount subject to VAT, with up to four decimal places.
           example: 1000
         ipl_tax_amount:
           type: number
-          description: Amount up to 4 decimal places
+          description: >-
+            The Insurance Premium Levy charged on the line item, with up to four
+            decimal places.
           example: 160
         ipl_taxable_amount:
           type: number
-          description: Amount up to 4 decimal places
+          description: >-
+            The line item amount subject to Insurance Premium Levy,  with up to
+            four decimal places.
           example: 1000
         tl_tax_amount:
           type: number
-          description: Amount up to 4 decimal places
+          description: >-
+            The Tourism Levy charged on the line item, with up to four decimal
+            places.
           example: 160
         tl_taxable_amount:
           type: number
-          description: Amount up to 4 decimal places
+          description: >-
+            The line item amount subject to Tourism Levy, with up to four
+            decimal places.
           example: 1000
         excise_tax_amount:
           type: number
-          description: Amount up to 4 decimal places
+          description: >-
+            The excise duty charged on the line item, with up to four decimal
+            places.
           example: 160
         excise_taxable_amount:
           type: number
-          description: Amount up to 4 decimal places
+          description: >-
+            The line item amount subject to excise duty, with up to four decimal
+            places.
           example: 1000
         tot_tax_amount:
           type: number
-          description: Amount up to 4 decimal places
+          description: >-
+            The turnover tax charged on the line item,  with up to four decimal
+            places.
           example: 160
         tot_taxable_amount:
           type: number
-          description: Amount up to 4 decimal places
+          description: >-
+            The line item amount subject to turnover tax, with up to four
+            decimal places.
           example: 1000
         unit_price:
           type: number
-          description: The price of the item up to 4 decimal places
+          description: The price per unit of the item,  with up to four decimal places.
           example: 116
         supply_price:
           type: number
-          description: The price up to 4 decimal places
+          description: >-
+            The supply amount recorded for the line item, with up to four
+            decimal places.
           example: 1160
         discount_rate:
           type: number
+          description: The discount rate applied to the line item, as a decimal.
           example: 0
         discount_amount:
           type: number
+          description: >-
+            The discount amount applied to the line item, with up to four
+            decimal places.
           example: 0
         item_id:
           type: string
+          description: The DigiTax ID of the catalogue item.
           example: item_01HC3J1VVVM05YCTS61G7V3KC6
     Supplier:
       type: object
+      description: A supplier recorded for the authenticated business.
       required:
         - id
         - supplier_tpin
       properties:
         id:
           type: string
-          description: Supplier ID
+          description: The DigiTax ID of the supplier.
           example: supplier_01J56FWS9KV3KAS0RHD4QJ1QCT
         supplier_name:
           type: string
-          description: Supplier Name
+          description: The supplier's name.
           example: Elite Books
         email:
           type: string
-          description: Supplier Email
+          description: The supplier's email address.
           example: elite@books.com
         phone:
           type: string
-          description: Supplier Phone Number
+          description: The supplier's phone number.
           example: '+260712345678'
         supplier_tpin:
           type: string
-          description: Supplier Tax Identification Number (TIN)
+          description: The supplier's taxpayer identification number (TPIN).
           example: '1234562718'
     Purchase:
       type: object
+      description: A purchase recorded for the authenticated business.
       required:
         - id
         - invoice_number
@@ -2198,28 +2696,38 @@ components:
       properties:
         id:
           type: string
+          description: The DigiTax ID of the purchase.
           example: purchase_01HC3J1VVVM05YCTS61G7V3KC6
         invoice_number:
           type: integer
+          description: The purchase invoice number generated by DigiTax for the branch.
           example: 4000
         receipt_type_code:
           type: string
+          description: The ZRA receipt type code for the purchase.
           example: P
         payment_type_code:
           type: string
+          description: >-
+            The code for the payment method used. See the [Payment Type Codes
+            table](https://zm.docs.digitax.tech/docs/sales-data-attributes#payment-type-codes)
+            for codes 01 through 07; the API also supports 08 for bank transfer.
           example: '07'
         purchase_date:
           type: string
-          description: The purchase date (YYYYMMDD)
+          description: The purchase date in YYYYMMDD format.
           example: '20260714'
         purchase_number:
           type: string
+          description: The purchase number assigned to the transaction.
           example: PUR24-234-565378-VFRDEF
         supplier_id:
           type: string
+          description: The DigiTax ID of the supplier.
           example: supplier_01J4PRP9V3W2R42EPPCR8WRY47
         supplier_invoice_number:
           type: integer
+          description: The invoice number issued by the supplier.
           example: 12
         status:
           type: string
@@ -2227,18 +2735,20 @@ components:
             - PENDING
             - FAILED
             - COMPLETED
-          description: status against ZRA
+          description: The purchase's synchronization status with ZRA.
           example: COMPLETED
         purchase_status_code:
           type: string
-          description: purchase status code
+          description: The ZRA purchase status code.
           example: 2
         item_list:
           type: array
+          description: The items and amounts included in the purchase.
           items:
             $ref: '#/components/schemas/PurchaseItem'
     PurchaseItem:
       type: object
+      description: A line item included in a purchase.
       required:
         - id
         - quantity
@@ -2256,80 +2766,118 @@ components:
       properties:
         id:
           type: string
+          description: The DigiTax ID of this purchase line item.
           example: purchaseitem_01HC3J1VVVM05YCTS61G7V3KC6
         quantity:
           type: number
+          description: The number of units purchased.
           example: 10
         total_amount:
           type: number
-          description: Amount up to 4 decimal places
+          description: The total amount for the line item, with up to four decimal places.
           example: 1160
         vat_tax_amount:
           type: number
-          description: Amount up to 4 decimal places
+          description: >-
+            The VAT amount recorded for the line item, with up to four decimal
+            places.
           example: 160
         vat_taxable_amount:
           type: number
-          description: Amount up to 4 decimal places
+          description: The line item amount subject to VAT, with up to four decimal places.
           example: 1000
         ipl_tax_amount:
           type: number
-          description: Amount up to 4 decimal places
+          description: >-
+            The Insurance Premium Levy amount recorded for the line item, with
+            up to four decimal places.
           example: 160
         ipl_taxable_amount:
           type: number
-          description: Amount up to 4 decimal places
+          description: >-
+            The line item amount subject to Insurance Premium Levy, with up to
+            four decimal places.
           example: 1000
         tl_tax_amount:
           type: number
-          description: Amount up to 4 decimal places
+          description: >-
+            The Tourism Levy amount recorded for the line item, with up to four
+            decimal places.
           example: 160
         tl_taxable_amount:
           type: number
-          description: Amount up to 4 decimal places
+          description: >-
+            The line item amount subject to Tourism Levy, with up to four
+            decimal places.
           example: 1000
         excise_tax_amount:
           type: number
-          description: Amount up to 4 decimal places
+          description: >-
+            The excise duty amount recorded for the line item, with up to four
+            decimal places.
           example: 160
         excise_taxable_amount:
           type: number
-          description: Amount up to 4 decimal places
+          description: >-
+            The line item amount subject to excise duty, with up to four decimal
+            places.
           example: 1000
         unit_price:
           type: number
-          description: The price of the item up to 4 decimal places
+          description: The price per unit of the item, with up to four decimal places.
           example: 116
         supply_price:
           type: number
-          description: The price up to 4 decimal places
+          description: >-
+            The supply amount recorded for the line item, with up to four
+            decimal places.
           example: 1160
         discount_rate:
           type: number
+          description: The discount rate applied to the line item, as a decimal.
           example: 0
         discount_amount:
           type: number
+          description: >-
+            The discount amount applied to the line item, with up to four
+            decimal places.
           example: 0
         item_id:
           type: string
+          description: The DigiTax ID of the catalogue item.
           example: item_01HC3J1VVVM05YCTS61G7V3KC6
         packing_unit_code:
           type: string
+          description: >-
+            The code for the item's packaging unit. See the [Packaging Unit
+            Codes
+            table](https://zm.docs.digitax.tech/docs/items-general-data-attributes#packaging-unit-codes).
           example: BG
         item_name:
           type: string
+          description: The name of the purchased item.
           example: African Literature
         item_class_code:
           type: string
+          description: >-
+            The ZRA classification code of the purchased item. See the [Item
+            Classification
+            Table](https://zm.docs.digitax.tech/docs/items-item-classification-table)
+            for sandbox and production codes.
           example: '50102518'
         item_code:
           type: string
+          description: The item code recorded for the purchase line.
           example: '20056'
         approved_quantity:
           type: number
+          description: >-
+            The quantity supplied when linking the purchase line to a catalogue
+            item.
           example: 1
     ItemComposition:
       type: object
+      description: A component item and quantity used to make another item.
       required:
         - id
         - item_id
@@ -2339,18 +2887,25 @@ components:
       properties:
         id:
           type: string
+          description: The DigiTax ID of this item composition record.
           example: itemcomposition_01J58XV8W45SHFZGKVERMB5XCA
         item_id:
           type: string
+          description: The DigiTax ID of the item being composed.
           example: item_01HC3J1VVVM05YCTS61G7V3KC6
         composition_item_id:
           type: string
+          description: The DigiTax ID of a component item.
           example: item_01J47XGVT004DFVCVFYN50SRSF
         composition_item_quantity:
           type: integer
+          description: The quantity of the component item used in the composed item.
           example: 30
     OfflineUrlSale:
       type: object
+      description: >-
+        Sale and receipt details returned for the specified business and trader
+        invoice number.
       required:
         - sale_date
         - trader_invoice_number
@@ -2369,45 +2924,78 @@ components:
       properties:
         id:
           type: string
+          description: The DigiTax ID of the sale.
           example: sale_01HC3HTDAXQ50E07CWR2A2CFBD
         trader_invoice_number:
           type: string
+          description: >-
+            The invoice reference from your system, or the DigiTax sale number
+            if no reference was supplied.
           example: '12345678901'
         original_sale_id:
           type: string
-          example: sale_01HC3HTDAXQ50E07CWR2A2CFBD
+          description: >-
+            The DigiTax ID of the original sale linked to a credit or debit
+            note. This endpoint does not include this field in its response.
         receipt_type_code:
           type: string
-          example: S
+          description: >-
+            The ZRA receipt type code. See the [Receipt Type Codes
+            table](https://zm.docs.digitax.tech/docs/sales-data-attributes#receipt-type-codes).
+            This endpoint does not include this field in its response.
         sale_number:
           type: string
-          example: SAL24-234-565378-VFRDEF
+          description: >-
+            The sale number assigned by DigiTax. This endpoint does not include
+            this field in its response.
         kind:
           type: string
           enum:
             - NORMAL
             - LPO
             - EXPORT
-          example: NORMAL
+          description: >-
+            The sale type (NORMAL, LPO, or EXPORT). This endpoint does not
+            include this field in its response.
         receipt_number:
           type: integer
+          description: The receipt number assigned by ZRA.
           example: 38
         lpo_number:
           type: string
+          description: >-
+            The local purchase order number for an LPO sale. This endpoint does
+            not include this field in its response.
         destination_country_code:
           type: string
-          example: KE
+          description: >-
+            The destination country code for an export sale. See the [Country
+            Codes
+            table](https://zm.docs.digitax.tech/docs/items-general-data-attributes#country-codes).
+            This endpoint does not include this field in its response.
         reason_code:
           type: string
-          example: '01'
+          description: >-
+            The reason code for a credit or debit note. See the [Refund Reason
+            Code
+            table](https://zm.docs.digitax.tech/docs/sales-data-attributes#refund-reason-code)
+            for credit notes or the [Debit Reason Code
+            table](https://zm.docs.digitax.tech/docs/sales-data-attributes#debit-reason-code)
+            for debit notes. This endpoint does not include this field in its
+            response.
         currency_code:
           type: string
+          description: >-
+            The currency code used for the transaction. See the [Currency Code
+            table](https://zm.docs.digitax.tech/docs/sales-data-attributes#currency-code).
           example: ZMW
         exchange_rate:
           type: number
+          description: The exchange rate for a sale made in a currency other than ZMW.
           example: 123.45
         sales_tax_summary:
           type: object
+          description: Taxable and tax amounts summed across the sale's line items.
           required:
             - taxable_amount_vat
             - taxable_amount_ipl
@@ -2422,55 +3010,71 @@ components:
           properties:
             taxable_amount_vat:
               type: number
-              description: VAT taxable amount
+              description: Total amount subject to VAT, with up to four decimal places.
               example: 0
             taxable_amount_ipl:
               type: number
-              description: Insurance Premium Levy taxable amount
+              description: >-
+                Total amount subject to Insurance Premium Levy, with up to four
+                decimal places.
               example: 517.24
             taxable_amount_tl:
               type: number
-              description: Tourism Levy taxable amount
+              description: >-
+                Total amount subject to Tourism Levy, with up to four decimal
+                places.
               example: 0
             taxable_amount_excise:
               type: number
-              description: Excise taxable amount
+              description: >-
+                Total amount subject to excise duty, with up to four decimal
+                places.
               example: 0
             taxable_amount_tot:
               type: number
-              description: Turn Over Tax taxable amount
+              description: >-
+                Total amount subject to turnover tax, with up to four decimal
+                places.
               example: 0
             tax_amount_vat:
               type: number
-              description: VAT tax amount
+              description: Total VAT charged, with up to four decimal places.
               example: 0
             tax_amount_ipl:
               type: number
-              description: Insurance Premium Levy tax amount
+              description: >-
+                Total Insurance Premium Levy charged, with up to four decimal
+                places.
               example: 517.24
             tax_amount_tl:
               type: number
-              description: Tourism Levy tax amount
+              description: Total Tourism Levy charged, with up to four decimal places.
               example: 0
             tax_amount_excise:
               type: number
-              description: Excise tax amount
+              description: Total excise duty charged, with up to four decimal places.
               example: 0
             tax_amount_tot:
               type: number
-              description: Turn Over Tax tax amount
+              description: Total turnover tax charged, with up to four decimal places.
               example: 0
         internal_data:
           type: string
+          description: Internal data returned by ZRA for the transaction.
           example: PB3ZSZP3RZR3AUPYBYLUTFJDIA
         receipt_signature:
           type: string
+          description: The receipt signature returned by ZRA.
           example: 3JYZVPTPMYBGHG4A
         sdc_id:
           type: string
+          description: >-
+            The identifier of the sales data controller (SDC) that processed the
+            transaction.
           example: SDC1234567890
         receipt_url:
           type: string
+          description: URL for the ZRA receipt.
           example: >-
             https://sandboxportal.zra.org.zm/common/link/ebm/receipt/indexEbmReceiptData?Data=2002720806000YXO7XG3HRQ7OOWDH
           format: url
@@ -2480,32 +3084,36 @@ components:
             - pending
             - failed
             - completed
-          description: status against ZRA
+          description: The transaction's synchronization status with ZRA.
           example: completed
         sale_date:
           type: string
-          description: The date of sale (YYYY-MM-DD)
+          description: The date of the sale in YYYY-MM-DD format.
           example: '2026-07-14'
         created_at:
           type: string
           description: >-
-            The date-time when the record was created (YYYY-MM-DD
-            HH:MM:SS.ffffff+TZ)
-          example: '2026-07-14 12:00:32.491899+00'
+            The date and time the sale record was created. This endpoint does
+            not include this field in its response.
         cash_discount_rate:
           type: number
-          description: Discount rate in decimal form i.e. 0.1 = 10%
+          description: >-
+            The sale-level discount rate as a decimal; for example, 0.1
+            represents 10%.
           example: 0
         cash_discount_amount:
           type: number
-          description: Amount up to 4 decimal places
+          description: The sale-level discount amount, with up to four decimal places.
           example: 0
         total:
           type: number
-          description: Total amount up to 4 decimal places
+          description: >-
+            The total amount charged for the sale, with up to four decimal
+            places.
           example: 1160
         business_details:
           type: object
+          description: The business details printed on the receipt.
           required:
             - name
             - pin
@@ -2515,21 +3123,27 @@ components:
           properties:
             name:
               type: string
+              description: The business name.
               example: Business Name
             pin:
               type: string
-              example: P012345678P
+              description: The business's TPIN.
+              example: '1012345678'
             email:
               type: string
+              description: The business's email address.
               example: support@digitax.tech
             phone:
               type: string
+              description: The business's phone number.
               example: 260712345678
             location:
               type: string
+              description: The business's location.
               example: Lusaka
         customer_details:
           type: object
+          description: The customer details printed on the receipt.
           required:
             - name
             - pin
@@ -2538,18 +3152,23 @@ components:
           properties:
             name:
               type: string
+              description: The customer's name.
               example: John Doe
             pin:
               type: string
-              example: P012345678P
+              description: The customer's TPIN.
+              example: '1065478391'
             email:
               type: string
+              description: The customer's email address.
               example: support@namiri.tech
             phone:
               type: string
+              description: The customer's phone number.
               example: 260712345678
         items:
           type: array
+          description: The sale line items shown on the receipt.
           items:
             type: object
             required:
@@ -2561,21 +3180,31 @@ components:
             properties:
               id:
                 type: string
+                description: The DigiTax ID of the catalogue item.
                 example: item_01HC3J1VVVM05YCTS61G7V3KC6
               name:
                 type: string
+                description: The item name shown on the receipt.
                 example: DigiTax Product 01
               price:
                 type: number
+                description: >-
+                  The price per unit of the item, with up to four decimal
+                  places.
                 example: 600
               currency:
                 type: string
-                example: KES
+                description: The currency code for the item price.
+                example: ZMW
               quantity:
                 type: number
+                description: The number of units sold.
                 example: 1
         logo_url:
           type: string
+          description: >-
+            URL of the business logo shown on the receipt. This endpoint does
+            not include this field in its response.
   parameters:
     After:
       in: query
