@@ -11,11 +11,10 @@ The `/items` endpoint has these two HTTP methods you can interact with:
 * [POST](ref:post_items)
 * [GET](ref:get_items)
 
-The `/items/{item_id}` endpoint has these three HTTP methods you can interact with:
+The `/items/{item_id}` endpoint has these two HTTP methods you can interact with:
 
 * [PUT](ref:put_items-item-id)
 * [GET](ref:get_items-item-id)
-* [DELETE](ref:delete_items-item-id)
 
 Below are the attributes used in the API requests and responses above.
 
@@ -93,7 +92,7 @@ Below are the attributes used in the API requests and responses above.
       </td>
 
       <td>
-        Represents Item Classification Code. See [Items classification table](doc:items-classification) for context - `"5059690800"`
+        Represents Item Classification Code. See [Items classification table](doc:items-item-classification-table) for context - `"5059690800"`
       </td>
     </tr>
 

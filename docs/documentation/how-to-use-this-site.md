@@ -23,7 +23,7 @@ Explore the guides as outlined on the left-hand menu.
 
 For a great developer experience, the endpoints in the [DigiTax Zambia API reference](/reference) are interactive.
 
-Once you are [set up on the DigiTax dashboard](doc:using-the-api) you'll get your test **X-API-Key** to use in the DigiTax API. We go over that process here.
+Once you are [set up on the DigiTax dashboard](doc:start-using-the-api) you'll get your test **X-API-Key** to use in the DigiTax API. We go over that process here.
 
 Explore the API endpoints [here](/reference).
 
@@ -39,7 +39,7 @@ We support **cursor-based pagination requests** for endpoints whose **GET** requ
 
 #### Parameters for paginated requests
 
-The following are optional query parameters for paginated requests like [GET FIRS Invoices](ref:get_invoices).
+The following are optional query parameters for paginated requests like [GET sales](ref:get_sales).
 
 | Parameter  | Explanation                                                              |
 | :--------- | :----------------------------------------------------------------------- |
@@ -57,24 +57,24 @@ After making requests via our interactive API reference, the most recent request
 
 ### Parameters
 
-Parameters (or Params) come in two types in the DigiTax Nigeria API - Query Params and Body Params.
+Parameters (or Params) come in two types in the DigiTax Zambia API - Query Params and Body Params.
 
 Below are examples:
 
 * Query Params
 
-  An example is seen in [GET FIRS Invoices](ref:get_invoices)
+  An example is seen in [GET sales](ref:get_sales)
 
 <Image align="center" width="360px" src="https://files.readme.io/d10de438c8359cc9dd67cfc7b87340a4e6a84abe03aadd17b7b2196be4ea5041-CleanShot_2025-02-27_at_12.49.29_22x.png" />
 
 * Body Params
 
-  An example is seen in [CREATE Party](ref:post_parties)
+  An example is seen in [POST items](ref:post_items)
 
   <Image align="center" width="360px" src="https://files.readme.io/cba45b39e32c9188f6331b5dffe3a86ab1950936b7c0a5407181d3406aa8aa5f-CleanShot_2025-02-27_at_12.55.032x.png" />
 
 ## 💬 We're here to help
 
-If you get stuck, [email us](mailto:info@namiri.tech)  or use the **DigiTax chat** on the bottom right of any page.
+If you get stuck, [email us](mailto:support@namiri.tech)  or use the **DigiTax chat** on the bottom right of any page.
 
 We're excited you're here! 💚

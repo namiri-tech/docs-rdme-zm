@@ -2,3 +2,13 @@ Digi
 Namiri
 stockable
 TPIN
+Odoo
+Fintech
+PAYE
+VSDC
+Tanzania
+Zimbabwe
+ZIMRA
+FDMS
+eTIMS
+TIMS

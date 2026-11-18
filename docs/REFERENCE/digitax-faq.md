@@ -1,5 +1,5 @@
 ---
-title: Digitax FAQ
+title: DigiTax FAQ
 excerpt: Frequently asked questions
 deprecated: false
 hidden: false
