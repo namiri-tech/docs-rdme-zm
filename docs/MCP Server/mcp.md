@@ -48,17 +48,15 @@ DigiTax Zambia API Hub hosts a remote MCP server at `https://zm.docs.digitax.tec
 
   </Tab>
   <Tab title="Claude Desktop">
-    **Add to `claude_desktop_config.json`:**
+    Claude Desktop connects to remote MCP servers through the Connectors UI, not via `claude_desktop_config.json`.
 
-    ```json
-    {
-      "mcpServers": {
-        "dgtxzm": {
-          "url": "https://zm.docs.digitax.tech/mcp"
-        }
-      }
-    }
-    ```
+    1. Open **Claude Desktop** and go to **Settings → Connectors**.
+    2. Click **Add custom connector**.
+    3. Enter a name (e.g. `DigiTax Zambia`) and the URL:
+       ```
+       https://zm.docs.digitax.tech/mcp
+       ```
+    4. Save. To use it in a conversation, click **+** → **Add connectors** and enable **DigiTax Zambia**.
 
   </Tab>
 </Tabs>
@@ -67,11 +65,22 @@ DigiTax Zambia API Hub hosts a remote MCP server at `https://zm.docs.digitax.tec
 
 Once configured, you can test your MCP server connection:
 
-1. **Open your AI editor** (Cursor, Windsurf, etc.)
+1. **Open your AI editor** (Cursor, Windsurf, Claude Desktop, etc.)
 2. **Start a new chat** with the AI assistant
 3. **Ask about DigiTax Zambia API Hub** - try questions like:
-   * "How do I [common use case]?"
-   * "Show me an example of [API functionality]"
-   * "Create a [integration type] using DigiTax Zambia API Hub"
+   * "How do I create a ZRA Smart Invoice sale with DigiTax Zambia?"
+   * "Which fields are mandatory when creating an item, and how do I pick its item classification code?"
+   * "How do I issue a credit note against an existing sale?"
+   * "How do I get a callback when a sale has synced with ZRA?"
 
 The AI should now have access to your DigiTax Zambia API Hub account data and documentation through the MCP server.
+
+## Authentication
+
+The DigiTax Zambia MCP server reads live data from your account. Pass your API key as a request header:
+
+```text
+X-API-Key: <your-api-key>
+```
+
+See [Prerequisites of using the API](doc:start-using-the-api#prerequisites) for how to obtain your key and configure it in your MCP client.

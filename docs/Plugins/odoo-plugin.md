@@ -92,7 +92,7 @@ Select one product
 
 ![Product-Page]
 
-Navigate to the Digitax Zambia module of the item
+Navigate to the DigiTax Zambia module of the item
 
 ![Product-DigiTax-Zambia]
 
@@ -120,7 +120,7 @@ Select one customer
 
 ![Customer]
 
-Navigate to the Digitax Zambia module of the customer
+Navigate to the DigiTax Zambia module of the customer
 
 ![Customer-DigiTax-Zambia]
 

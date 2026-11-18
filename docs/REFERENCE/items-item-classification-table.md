@@ -14,7 +14,7 @@ To help you interpret the data, here are the column names and their definitions:
 | itemClsNm   | Item Classification Name    |
 | itemClsLvl  | Item Classification Level   |
 | taxTyCd     | Taxation Type Code          |
-| mjrTgYn     | Whether it is a Major Taget |
+| mjrTgYn     | Whether it is a Major Target |
 | useYn       | Used / UnUsed               |
 
 ## Items Classification table

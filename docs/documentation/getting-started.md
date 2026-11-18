@@ -25,14 +25,17 @@ hidden: false
   </Card>
 </Cards>
 
-<Accordion title="DigiTax is Pan-African. Explore other countries here ..." icon="fa-globe">
+<Accordion title="DigiTax is Global. Explore other supported countries below ..." icon="fa-globe">
   You are currently reading a guide in the DigiTax Zambia API Hub.
 
   If you're looking for another country or the general homepage for DigiTax API, navigate to the [DigiTax API homepage](https://docs.digitax.tech), or country-specific API hub pages (ordered alphabetically):
 
-  * <i class="icon-guides"></i> [DigiTax Kenya API hub](https://ke.docs.digitax.tech)
-  * <i class="icon-guides"></i> [DigiTax Nigeria API hub](https://ng.docs.digitax.tech)
-  * <i class="icon-guides"></i> **DigiTax Zambia API hub (You are here 🎉)**
+  * <i class="icon-guides" /> [DigiTax Kenya API Hub](https://ke.docs.digitax.tech)
+  * <i class="icon-guides" /> [DigiTax Nigeria API Hub](https://ng.docs.digitax.tech)
+  * <i class="icon-guides" /> [DigiTax Tanzania API Hub](https://tz.docs.digitax.tech)
+  * <i class="icon-guides" /> [DigiTax UAE API Hub](https://ae.docs.digitax.tech)
+  * <i class="icon-guides" /> **DigiTax Zambia API Hub (You are here 🎉)**
+  * <i class="icon-guides" /> [DigiTax Zimbabwe API Hub](https://zw.docs.digitax.tech)
 </Accordion>
 
 ## Electronic Tax Invoicing in Zambia
@@ -161,7 +164,7 @@ We comply with industry and security best practices.
 
 The DigiTax App and Dashboard users securely sign up and log in via social media credentials (Google and Microsoft) or email address, one-time PIN/password, and secure email links.
 
-> The dashboard is where you sign up and set up profiles and businesses outrightly as a product user or before integration.
+> The dashboard is where you sign up and set up profiles and businesses, either as a product user or before integration.
 
 All activity is logged for audit trail and compliance checks, and all information is encrypted and transmitted for
 maximum protection
